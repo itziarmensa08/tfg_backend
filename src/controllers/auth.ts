@@ -6,6 +6,12 @@ const registerCtrl = async (req: Request, res: Response) => {
         const response = await registerUser(req.body);
         if (response == 'ARLEADY_USER') {
             res.status(409).send('Already user');
+        } else if(response == 'USERNAME_NOT_AVAILABLE') {
+            res.status(409).send('Username not available');
+        } else if(response == 'NOT_VALID_EMAIL') {
+            res.status(409).send('Email not valid');
+        } else if(response == 'INVALID_PASSWORD') {
+            res.status(409).send('Invalid password');
         } else {
             res.status(201).send(response);
         }
