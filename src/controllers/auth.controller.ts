@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginUser, registerUser } from "../services/auth";
+import { loginUser, registerUser } from "../services/auth.service";
 
 const registerCtrl = async (req: Request, res: Response) => {
     try {
@@ -24,6 +24,7 @@ const registerCtrl = async (req: Request, res: Response) => {
 const loginCtrl = async (req: Request, res: Response) => {
     try {
         const response = await loginUser(req.body);
+
         if (response == 'NOT_FOUND_USER') {
             res.status(404).send('Not found user');
 

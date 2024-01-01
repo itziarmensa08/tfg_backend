@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { obtainUser, obtainUsers, putUser, removeUser } from "../services/user"
+import { obtainUser, obtainUsers, putUser, removeUser } from "../services/user.service"
 
 const getUser = async (req: Request, res: Response) => {
     try {
