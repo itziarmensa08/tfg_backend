@@ -1,4 +1,4 @@
-import {Schema, Types, model, Model} from "mongoose";
+import {Schema, model} from "mongoose";
 import { User } from "../interfaces/user.interface";
 
 const UserSchema = new Schema<User> (
@@ -36,6 +36,15 @@ const UserSchema = new Schema<User> (
         },
         dateBorn: {
             type: Date,
+        },
+        profileImage: {
+            type: String,
+        }, 
+        language: {
+            type: String,
+            enum: ['ca', 'es', 'en_US'],
+            default: 'es',
+            required: true,
         }
     },
     {

@@ -7,4 +7,6 @@ export interface User extends Auth {
     role: 'admin' | 'user';
     telephone?: String;
     dateBorn?: Date;
+    profileImage?: String;
+    language: 'ca' | 'es' | 'en_US';
 }
