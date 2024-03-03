@@ -21,6 +21,6 @@ const AircraftSchema = new Schema<Aircraft> (
     }
 );
 
-const AircraftModel = model('aircraft', AircraftSchema);
+const AircraftModel = model('aircrafts', AircraftSchema);
 
 export default AircraftModel;

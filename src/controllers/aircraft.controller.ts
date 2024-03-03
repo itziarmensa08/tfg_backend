@@ -24,7 +24,7 @@ const postAircraft = async (req: Request, res: Response) => {
     try {
         const aircraft = req.body;
         const response = await addAircraft(aircraft);
-        res.status(200).send(response);
+        res.status(201).send(response);
     } catch (e) {
         res.status(500).json(`Error postAircraft: ${e}`)
     }
