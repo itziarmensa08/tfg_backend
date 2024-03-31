@@ -3,5 +3,6 @@ export interface Airport {
     elevation: number;
     oaciCode: String;
     iataCode: String;
+    referenceTemperature?: number;
     profileImage?: String;
 }

@@ -19,6 +19,10 @@ const AirportSchema = new Schema<Airport> (
             type: String,
             required: true,
         },
+        referenceTemperature: {
+            type: Number,
+            required: true,
+        },
         profileImage: {
             type: String,
         },
