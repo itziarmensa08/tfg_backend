@@ -7,4 +7,7 @@ export interface Procedure {
     rwyDoc: String;
     sidName: String;
     rwyName: String;
+    dpName: String;
+    dpDistance: Number;
+    weight: Number;
 }

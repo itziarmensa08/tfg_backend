@@ -29,6 +29,18 @@ const ProcedureSchema = new Schema<Procedure> (
             type: String,
             required: true,
         },
+        dpName: {
+            type: String,
+            required: true,
+        },
+        dpDistance: {
+            type: Number,
+            required: true,
+        },
+        weight: {
+            type: Number,
+            required: true,
+        },
     },
     {
         timestamps: true,
