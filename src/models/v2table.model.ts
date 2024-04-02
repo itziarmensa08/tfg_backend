@@ -12,7 +12,7 @@ const V2tableSchema = new Schema<V2table> (
             type: String,
             required: true,
         },
-        data: [{
+        rows: [{
             pressure: {
                 type: Number,
                 required: true
@@ -21,18 +21,20 @@ const V2tableSchema = new Schema<V2table> (
                 type: Number,
                 required: true
             },
-            temperature: {
-                type: Number,
-                required: true
-            },
-            velocityName: {
-                type: String,
-                required: true
-            },
-            velocityValue: {
-                type: Number,
-                required: true
-            }
+            data: [{
+                temperature: {
+                    type: Number,
+                    required: true
+                },
+                velocityName: {
+                    type: String,
+                    required: true
+                },
+                velocityValue: {
+                    type: Number,
+                    required: true
+                }
+            }]
         }]
     },
     {

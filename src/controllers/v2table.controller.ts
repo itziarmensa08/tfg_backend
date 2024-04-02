@@ -1,10 +1,20 @@
 import { Request, Response } from "express"
-import { addV2table, addV2tableData, obtainV2table, obtainV2tables, putV2table, removeV2table } from "../services/v2table.service";
+import { addV2table, addV2tableRow, addV2tableRowData, obtainV2table, obtainV2tableByAircraft, obtainV2tables, putV2table, removeV2table } from "../services/v2table.service";
 
 const getV2table = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const response = await obtainV2table(id);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error getV2table: ${e}`)
+    }
+}
+
+const getV2tableByAircraft = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const response = await obtainV2tableByAircraft(id);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error getV2table: ${e}`)
@@ -55,11 +65,23 @@ const addData = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const v2tabledata = req.body;
-        const response = await addV2tableData(id, v2tabledata);
+        const response = await addV2tableRow(id, v2tabledata);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error updateV2table: ${e}`)
     }
 }
 
-export {getV2table, getV2tables, postV2table, updateV2table, deleteV2table, addData};
+const addRowData = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const weight = req.params.weight;
+        const v2tabledata = req.body;
+        const response = await addV2tableRowData(id, parseFloat(weight), v2tabledata);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error updateV2table: ${e}`)
+    }
+}
+
+export {getV2table, getV2tables, postV2table, updateV2table, deleteV2table, addData, getV2tableByAircraft, addRowData};
