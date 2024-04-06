@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addV2table, addV2tableRow, addV2tableRowData, obtainV2table, obtainV2tableByAircraft, obtainV2tables, putV2table, removeV2table } from "../services/v2table.service";
+import { addV2table, addV2tableRow, addV2tableRowData, obtainClosestRows, obtainV2table, obtainV2tableByAircraft, obtainV2tables, putV2table, removeV2table } from "../services/v2table.service";
 
 const getV2table = async (req: Request, res: Response) => {
     try {
@@ -84,4 +84,18 @@ const addRowData = async (req: Request, res: Response) => {
     }
 }
 
-export {getV2table, getV2tables, postV2table, updateV2table, deleteV2table, addData, getV2tableByAircraft, addRowData};
+const getClosestRows = async (req: Request, res: Response) => {
+    try {
+        const pressure = req.body.pressure;
+        const grossWeight = req.body.grossWeight;
+        const temperature = req.body.temperature;
+        const speedName = req.body.speedName;
+        const idAircraft = req.body.idAircraft;
+        const response = await obtainClosestRows(pressure, grossWeight, temperature, speedName, idAircraft);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error getClosestRows: ${e}`)
+    }
+}
+
+export {getV2table, getV2tables, postV2table, updateV2table, deleteV2table, addData, getV2tableByAircraft, addRowData, getClosestRows};

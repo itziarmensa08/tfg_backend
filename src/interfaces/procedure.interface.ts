@@ -10,4 +10,28 @@ export interface Procedure {
     dpName: String;
     dpDistance: Number;
     weight: Number;
+    firstSegment: FirstSegment,
+    secondSegment: SecondSegment,
+    thirdSegment: ThirdSegment
+}
+
+export interface FirstSegment {
+    velocityIAS: Number,
+    velocityTAS: Number,
+    rateClimb: Number,
+    distanceToDP: Number
+}
+
+export interface SecondSegment {
+    velocityIAS: Number,
+    velocityTAS: Number,
+    rateClimb: Number,
+    distanceToDP: Number
+}
+
+export interface ThirdSegment {
+    velocityIAS: Number,
+    velocityTAS: Number,
+    rateClimb: Number,
+    distanceToDP: Number
 }

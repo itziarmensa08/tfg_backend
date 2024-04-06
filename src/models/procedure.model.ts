@@ -1,6 +1,27 @@
 import {Schema, model} from "mongoose";
 import { Procedure } from "../interfaces/procedure.interface";
 
+const FirstSegmentSchema = new Schema({
+    velocityIAS: { type: Number, required: true },
+    velocityTAS: { type: Number, required: true },
+    rateClimb: { type: Number, required: true },
+    distanceToDP: { type: Number, required: true }
+});
+
+const SecondSegmentSchema = new Schema({
+    velocityIAS: { type: Number, required: true },
+    velocityTAS: { type: Number, required: true },
+    rateClimb: { type: Number, required: true },
+    distanceToDP: { type: Number, required: true }
+});
+
+const ThirdSegmentSchema = new Schema({
+    velocityIAS: { type: Number, required: true },
+    velocityTAS: { type: Number, required: true },
+    rateClimb: { type: Number, required: true },
+    distanceToDP: { type: Number, required: true }
+});
+
 const ProcedureSchema = new Schema<Procedure> (
     {
         airport: {
@@ -41,6 +62,9 @@ const ProcedureSchema = new Schema<Procedure> (
             type: Number,
             required: true,
         },
+        firstSegment: FirstSegmentSchema,
+        secondSegment: SecondSegmentSchema,
+        thirdSegment: ThirdSegmentSchema
     },
     {
         timestamps: true,

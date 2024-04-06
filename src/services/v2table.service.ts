@@ -57,5 +57,134 @@ const addV2tableRowData = async (v2tableId: string, weight: number, v2tableData:
     return updatedV2table;
 };
 
+const obtainClosestRows = async (pressure: number, grossWeight: number, temperature: number, speedName: string, idAircraft: string) => {
+    const v2table = await V2tableModel.findOne({ aircraft: idAircraft });
 
-export { obtainV2tables, obtainV2table, addV2table, putV2table, removeV2table, addV2tableRowData, obtainV2tableByAircraft, addV2tableRow };
+    if (!v2table) {
+        throw new Error("V2table not found for the specified aircraft");
+    }
+
+    let closestPressureRows;
+
+    const exactPressureRows = await V2tableModel.aggregate([
+        {
+            $match: {
+                _id: v2table._id,
+                "rows.pressure": pressure
+            }
+        },
+        {
+            $unwind: "$rows"
+        },
+        {
+            $match: { "rows.pressure": pressure }
+        },
+        {
+            $replaceRoot: { newRoot: "$rows" }
+        }
+    ]);
+
+    if (exactPressureRows.length > 0) {
+        closestPressureRows = exactPressureRows;
+    } else {
+        closestPressureRows = await V2tableModel.aggregate([
+            {
+                $match: { _id: v2table._id }
+            },
+            {
+                $unwind: "$rows"
+            },
+            {
+                $match: {
+                    $or: [
+                        { "rows.pressure": { $lte: pressure } },
+                        { "rows.pressure": { $gte: pressure - 1000 } }
+                    ]
+                }
+            },
+            {
+                $replaceRoot: { newRoot: "$rows" }
+            }
+        ]);
+    }
+
+    let closestWeightRows;
+
+    const exactWeightRows = closestPressureRows.filter((row: V2tableRow) => row.weight === grossWeight);
+
+    if (exactWeightRows.length > 0) {
+        closestWeightRows = exactWeightRows;
+    } else {
+        const lowerWeight = Math.floor(grossWeight / 500) * 500;
+        const higherWeight = Math.ceil(grossWeight / 500) * 500;
+
+        closestWeightRows = closestPressureRows.filter((row: V2tableRow) => row.weight === lowerWeight || row.weight === higherWeight);
+    }
+
+    let closestTemperatureData = [];
+
+    const exactTemperatureData = closestWeightRows.reduce((accumulator: V2tableData[], row: V2tableRow) => {
+        const rowData = row.data.filter((data: V2tableData) => data.temperature === temperature);
+        if (rowData.length > 0) {
+            accumulator.push(...rowData);
+        }
+        return accumulator;
+    }, []);
+
+    if (exactTemperatureData.length > 0) {
+        closestTemperatureData = exactTemperatureData;
+    } else {
+        const predefinedTemperatures = [-30, -10, 0, 10, 20, 40, 55];
+        const [closest1, closest2] = findClosestNumbers(predefinedTemperatures, temperature);
+        closestTemperatureData = closestWeightRows.reduce((accumulator: V2tableData[], row: V2tableRow) => {
+            const closestTemperatures = row.data.filter((data: V2tableData) => data.temperature === closest1 || data.temperature === closest2);
+            accumulator.push(...closestTemperatures);
+            return accumulator;
+        }, []);
+    }
+
+    const filteredData = closestTemperatureData.filter((data: V2tableData) => {
+        return data.velocityName === speedName;
+    });
+
+    const velocityValues = filteredData.map((data: V2tableData) => data.velocityValue);
+    const median = calculateMedian(velocityValues);
+    const response = {
+        "cells": filteredData,
+        "finalVelocity": median
+    }
+
+    return response;
+};
+
+function findClosestNumbers(list: number[], x: number): [number, number] {
+    list.sort((a, b) => a - b);
+
+    let closest1 = Number.NEGATIVE_INFINITY;
+    let closest2 = Number.POSITIVE_INFINITY;
+
+    for (let num of list) {
+        if (num <= x && num > closest1) {
+            closest1 = num;
+        }
+        if (num >= x && num < closest2) {
+            closest2 = num;
+        }
+    }
+
+    return [closest1, closest2];
+}
+
+function calculateMedian(velocityValues: number[]): number {
+    velocityValues.sort((a, b) => a - b);
+
+    const n = velocityValues.length;
+    if (n % 2 !== 0) {
+        return velocityValues[Math.floor(n / 2)];
+    }
+    const midIndex = n / 2;
+    return (velocityValues[midIndex - 1] + velocityValues[midIndex]) / 2;
+}
+
+
+export { obtainV2tables, obtainV2table, addV2table, putV2table, removeV2table, addV2tableRowData, obtainV2tableByAircraft, addV2tableRow, obtainClosestRows };
