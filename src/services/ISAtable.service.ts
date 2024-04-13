@@ -32,12 +32,61 @@ const addISAtableData = async (isatableId: string, isatableData: ISAtableData) =
     return response;
 };
 
-const obtainClosestISAtable = async (altitudeFeet: number, pressure: Pressure) => {
-    const response = await ISAtableModel.findOne({
-        "data.altitudeFeet": { $lte: altitudeFeet },
-        "data.pressure": { $gte: pressure.hPa }
-    }).sort({ "data.altitudeFeet": -1, "data.pressure": 1 });
-    return response;
+const obtainClosestISAtable = async (altitudeFeet: number) => {
+    const isatable = await ISAtableModel.find({});
+
+    if (!isatable[0]) {
+        throw new Error("ISAtable not found");
+    }
+
+    let closestAltitudeRows;
+
+    const exactAltitudeRows = await ISAtableModel.aggregate([
+        {
+            $match: {
+                _id: isatable[0]._id,
+                "data.altitudeFeet": altitudeFeet
+            }
+        },
+        {
+            $unwind: "$data"
+        },
+        {
+            $match: { "data.altitudeFeet": altitudeFeet }
+        },
+        {
+            $replaceRoot: { newRoot: "$data" }
+        }
+    ]);
+
+    if (exactAltitudeRows.length > 0) {
+        closestAltitudeRows = exactAltitudeRows;
+    } else {
+        closestAltitudeRows = await ISAtableModel.aggregate([
+            {
+                $match: { _id: isatable[0]._id }
+            },
+            {
+                $unwind: "$data"
+            },
+            {
+                $addFields: {
+                    altitudeDifference: { $abs: { $subtract: ["$data.altitudeFeet", altitudeFeet] } }
+                }
+            },
+            {
+                $sort: { altitudeDifference: 1 }
+            },
+            {
+                $limit: 2
+            },
+            {
+                $replaceRoot: { newRoot: "$data" }
+            }
+        ]);
+    }
+
+    return closestAltitudeRows;
 };
 
 export { obtainISAtables, obtainISAtable, addISAtable, putISAtable, removeISAtable, addISAtableData, obtainClosestISAtable };

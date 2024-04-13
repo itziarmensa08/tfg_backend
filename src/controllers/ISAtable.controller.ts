@@ -65,8 +65,7 @@ const addISAtableDataController = async (req: Request, res: Response) => {
 const getClosestISAtable = async (req: Request, res: Response) => {
     try {
         const altitudeFeet = req.body.altitudeFeet;
-        const pressure = req.body.pressure;
-        const response = await obtainClosestISAtable(altitudeFeet, pressure);
+        const response = await obtainClosestISAtable(altitudeFeet);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error getClosestISAtable: ${e}`)

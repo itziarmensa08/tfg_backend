@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { checkSession } from "../middlewares/session.middleware";
-import { addISAtableDataController, deleteISAtable, getClosestISAtable, getISAtable, getISAtables, postISAtable, updateISAtable } from "../controllers/isatable.controller";
+import { addISAtableDataController, deleteISAtable, getClosestISAtable, getISAtable, getISAtables, postISAtable, updateISAtable } from "../controllers/ISAtable.controller";
 
 const router = Router();
 
