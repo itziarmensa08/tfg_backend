@@ -40,6 +40,7 @@ const obtainClosestISAtable = async (altitudeFeet: number) => {
     }
 
     let closestAltitudeRows;
+    let densityValue;
 
     const exactAltitudeRows = await ISAtableModel.aggregate([
         {
@@ -61,6 +62,7 @@ const obtainClosestISAtable = async (altitudeFeet: number) => {
 
     if (exactAltitudeRows.length > 0) {
         closestAltitudeRows = exactAltitudeRows;
+        densityValue = closestAltitudeRows[0].density;
     } else {
         closestAltitudeRows = await ISAtableModel.aggregate([
             {
@@ -84,9 +86,25 @@ const obtainClosestISAtable = async (altitudeFeet: number) => {
                 $replaceRoot: { newRoot: "$data" }
             }
         ]);
+        const alt1 = closestAltitudeRows[0].altitudeFeet;
+        const alt2 = closestAltitudeRows[1].altitudeFeet;
+        const density1 = closestAltitudeRows[0].density;
+        const density2 = closestAltitudeRows[1].density;
+        densityValue = interpolateDensity(altitudeFeet, alt1, alt2, density1, density2);
     }
 
-    return closestAltitudeRows;
+    const response = {
+        "cells": closestAltitudeRows,
+        "densityValue": densityValue
+    }
+
+
+    return response;
+};
+
+const interpolateDensity = (targetAltitudeFeet: number, alt1: number, alt2: number, density1: number, density2: number) => {
+    const slope = (density2 - density1) / (alt2 - alt1);
+    return density1 + slope * (targetAltitudeFeet - alt1);
 };
 
 export { obtainISAtables, obtainISAtable, addISAtable, putISAtable, removeISAtable, addISAtableData, obtainClosestISAtable };

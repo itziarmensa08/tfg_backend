@@ -3,6 +3,7 @@ import { Procedure } from "../interfaces/procedure.interface";
 
 const FirstSegmentSchema = new Schema({
     velocityIAS: { type: Number, required: true },
+    density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
     distanceToDP: { type: Number, required: true }
@@ -10,6 +11,7 @@ const FirstSegmentSchema = new Schema({
 
 const SecondSegmentSchema = new Schema({
     velocityIAS: { type: Number, required: true },
+    density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
     distanceToDP: { type: Number, required: true }
@@ -17,6 +19,7 @@ const SecondSegmentSchema = new Schema({
 
 const ThirdSegmentSchema = new Schema({
     velocityIAS: { type: Number, required: true },
+    density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
     distanceToDP: { type: Number, required: true }

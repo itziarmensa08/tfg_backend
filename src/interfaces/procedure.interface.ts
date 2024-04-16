@@ -17,6 +17,7 @@ export interface Procedure {
 
 export interface FirstSegment {
     velocityIAS: Number,
+    density: Number,
     velocityTAS: Number,
     rateClimb: Number,
     distanceToDP: Number
@@ -24,6 +25,7 @@ export interface FirstSegment {
 
 export interface SecondSegment {
     velocityIAS: Number,
+    density: Number,
     velocityTAS: Number,
     rateClimb: Number,
     distanceToDP: Number
@@ -31,6 +33,7 @@ export interface SecondSegment {
 
 export interface ThirdSegment {
     velocityIAS: Number,
+    density: Number,
     velocityTAS: Number,
     rateClimb: Number,
     distanceToDP: Number
