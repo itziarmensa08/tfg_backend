@@ -9,4 +9,10 @@ export interface User extends Auth {
     dateBorn?: Date;
     profileImage?: String;
     language: 'ca' | 'es' | 'en_US';
+    tasks: Event[]
+}
+
+export interface Event {
+    date: Date;
+    title: String;
 }

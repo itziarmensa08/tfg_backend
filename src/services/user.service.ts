@@ -21,5 +21,13 @@ const removeUser = async (id: string) => {
     return response;
 }
 
+const addTask = async (id: string, task: Event) => {
+    const updateResult = await UserModel.updateOne(
+        { _id: id },
+        { $push: { tasks: task  } }
+    );
+    return updateResult
+}
 
-export { obtainUsers, obtainUser, putUser, removeUser };
+
+export { obtainUsers, obtainUser, putUser, removeUser, addTask };

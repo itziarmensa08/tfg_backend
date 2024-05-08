@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { obtainUser, obtainUsers, putUser, removeUser } from "../services/user.service"
+import { addTask, obtainUser, obtainUsers, putUser, removeUser } from "../services/user.service"
 
 const getUser = async (req: Request, res: Response) => {
     try {
@@ -41,4 +41,15 @@ const deleteUser = async (req: Request, res: Response) => {
     }
 }
 
-export {getUser, getUsers, updateUser, deleteUser};
+const addTaskUser = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const task = req.body;
+        const response = await addTask(id, task);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error adding task: ${e}`)
+    }
+}
+
+export {getUser, getUsers, updateUser, deleteUser, addTaskUser};

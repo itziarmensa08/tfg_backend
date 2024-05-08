@@ -39,13 +39,23 @@ const UserSchema = new Schema<User> (
         },
         profileImage: {
             type: String,
-        }, 
+        },
         language: {
             type: String,
             enum: ['ca', 'es', 'en_US'],
             default: 'es',
             required: true,
-        }
+        },
+        tasks: [{
+            date: {
+                type: Date,
+                required: true
+            },
+            title: {
+                type: String,
+                required: true
+            },
+        }]
     },
     {
         timestamps: true,
