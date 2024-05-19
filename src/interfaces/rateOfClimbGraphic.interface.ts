@@ -16,7 +16,7 @@ export interface Axis{
 }
 
 export interface PressureLine{
-    altitud: Number;
+    altitud: Number | String;
     points: Coordinates[];
 }
 

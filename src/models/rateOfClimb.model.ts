@@ -16,7 +16,7 @@ const WeightLinesSchema = new Schema({
 });
 
 const PressureLinesSchema = new Schema({
-    altitud: { type: Number, required: true },
+    altitud: { type: Schema.Types.Mixed, required: true },
     points: { type: [CoordinateSchema], required: true },
 });
 
