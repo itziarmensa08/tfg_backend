@@ -3,7 +3,8 @@ import { RateOfClimbGraphic } from "../interfaces/rateOfClimbGraphic.interface";
 
 const AxisSchema = new Schema({
     x: { type: [Number], required: true },
-    y: { type: [Number], required: true },
+    yWeight: { type: [Number], required: true },
+    yAltitud: { type: [Number], required: true },
 });
 
 const CoordinateSchema = new Schema({

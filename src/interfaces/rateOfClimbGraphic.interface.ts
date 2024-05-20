@@ -11,8 +11,9 @@ export interface RateOfClimbGraphic {
 }
 
 export interface Axis{
-    x: Number[];
-    y: Number[];
+    x: number[];
+    yWeight: number[];
+    yAltitud: number[];
 }
 
 export interface PressureLine{
@@ -25,6 +26,6 @@ export interface WeightLines{
 }
 
 export interface Coordinates{
-    x: Number;
-    y: Number;
+    x: number;
+    y: number;
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addPressureLine, addRateOfClimbGraphic, addWeightLine, obtainRateOfClimbGraphic, obtainRateOfClimbGraphicByAircraft, obtainRateOfClimbGraphics, putRateOfClimbGraphic, removeRateOfClimbGraphic } from "../services/rateOfClimb.service";
+import { addPressureLine, addRateOfClimbGraphic, addWeightLine, calculateRate, obtainRateOfClimbGraphic, obtainRateOfClimbGraphicByAircraft, obtainRateOfClimbGraphics, putRateOfClimbGraphic, removeRateOfClimbGraphic } from "../services/rateOfClimb.service";
 
 
 const getRateOfClimbGraphic = async (req: Request, res: Response) => {
@@ -84,4 +84,17 @@ const postWeightLine = async (req: Request, res: Response) => {
     }
 }
 
-export {getRateOfClimbGraphic, getRateOfClimbGraphicByAircraft, getRateOfClimbGraphics, postRateOfClimbGraphic, updateRateOfClimbGraphic, deleteRateOfClimbGraphic, postPressureLine, postWeightLine };
+const calculateRateOfClimb = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const temperature = req.body.temperature;
+        const altitud = req.body.altitud;
+        const weight = req.body.weight;
+        const response = await calculateRate(id, temperature, altitud, weight);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error postWeightLine: ${e}`)
+    }
+}
+
+export {getRateOfClimbGraphic, getRateOfClimbGraphicByAircraft, getRateOfClimbGraphics, postRateOfClimbGraphic, updateRateOfClimbGraphic, deleteRateOfClimbGraphic, postPressureLine, postWeightLine, calculateRateOfClimb };
