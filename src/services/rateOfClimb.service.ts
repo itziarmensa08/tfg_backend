@@ -57,10 +57,6 @@ const calculateRate = async (graphicId: string, temperature: number, altitud: nu
     if (!graphic) {
         throw new Error("Graphic not found");
     }
-    const altitudPoint: Coordinates = {
-        x: 0,
-        y: 0
-    };
 
     const { lower, upper } = findClosestPressureLines(graphic.pressureLines, altitud);
     if (!lower || !upper) {
@@ -95,24 +91,38 @@ const calculateRate = async (graphicId: string, temperature: number, altitud: nu
     const lastWeightPoint = weightClosest.points[weightClosest.points.length - 1];
     const xDifference = xFinal - lastWeightPoint.x;
 
-    let generatedPoints: Coordinates[] = [];
-    let currentY = lastWeightPoint.y;
+    let adjustedPoints: Coordinates[] = weightClosest.points.map(point => ({
+        x: point.x + xDifference,
+        y: point.y
+    }));
 
-    while ((xDifference < 0 && currentY > weight) || (xDifference > 0 && currentY < weight)) {
-        const newX = xFinal;
-        const newY = currentY;
-
-        generatedPoints.push({ x: newX, y: newY });
-
-        // Asegúrate de que el paso sea correcto según la dirección del xDifference
-        currentY += xDifference < 0 ? -1 : 1;
+    let lowerPoint: Coordinates | undefined;
+    let upperPoint: Coordinates | undefined;
+    for (let i = 0; i < adjustedPoints.length; i++) {
+        if (adjustedPoints[i].y >= (weight/1000)) {
+            upperPoint = adjustedPoints[i];
+            lowerPoint = adjustedPoints[i - 1];
+            break;
+        }
     }
 
-    // Ajustar el último punto para asegurarse de que alcance exactamente el peso deseado
-    generatedPoints.push({ x: xFinal, y: weight });
+    if (lowerPoint && upperPoint && !adjustedPoints.some(point => point.y === (weight/1000))) {
+        const interpolatedX = interpolate(
+            lowerPoint.y,
+            lowerPoint.x,
+            upperPoint.y,
+            upperPoint.x,
+            (weight/1000)
+        );
+        adjustedPoints.push({ x: interpolatedX, y: (weight/1000) });
+        adjustedPoints.sort((a, b) => a.x - b.x);
+    }
 
-    return weightClosest;
-    //return { firstPoint, secondPoint, thirdPoint, finalPoint };
+    adjustedPoints = adjustedPoints.filter(point => point.y >= (weight/1000));
+
+    const finalPoint : Coordinates = {x: adjustedPoints[adjustedPoints.length - 1].x, y: graphic.axis.yWeight[0]};
+
+    return { firstPoint, secondPoint, thirdPoint, adjustedPoints, finalPoint };
 };
 
 function findClosestPressureLines(pressureLines: PressureLine[], altitud: number): { lower: PressureLine | null, upper: PressureLine | null } {
