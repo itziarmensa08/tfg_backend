@@ -9,6 +9,7 @@ export interface Procedure {
     rwyName: String;
     dpName: String;
     dpDistance: Number;
+    dpAltitude: Number;
     weight: Number;
     firstSegment: FirstSegment,
     secondSegment: SecondSegment,
@@ -20,7 +21,9 @@ export interface FirstSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number
+    distanceToDP: Number,
+    timeToFinish: Number,
+    distanceToFinish: Number
 }
 
 export interface SecondSegment {
@@ -28,7 +31,9 @@ export interface SecondSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number
+    distanceToDP: Number,
+    timeToFinish: Number,
+    distanceToFinish: Number
 }
 
 export interface ThirdSegment {
@@ -36,5 +41,7 @@ export interface ThirdSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number
+    distanceToDP: Number,
+    timeToFinish: Number,
+    distanceToFinish: Number
 }
