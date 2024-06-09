@@ -21,9 +21,12 @@ export interface FirstSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number,
     timeToFinish: Number,
-    distanceToFinish: Number
+    distanceToFinish: Number,
+    altitudeInDP: Number,
+    timeToDP: Number,
+    reachDP: boolean,
+    clearDP: boolean
 }
 
 export interface SecondSegment {
@@ -31,9 +34,12 @@ export interface SecondSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number,
     timeToFinish: Number,
-    distanceToFinish: Number
+    distanceToFinish: Number,
+    altitudeInDP: Number,
+    timeToDP: Number,
+    reachDP: boolean,
+    clearDP: boolean
 }
 
 export interface ThirdSegment {
@@ -41,7 +47,10 @@ export interface ThirdSegment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    distanceToDP: Number,
     timeToFinish: Number,
-    distanceToFinish: Number
+    distanceToFinish: Number,
+    altitudeInDP: Number,
+    timeToDP: Number,
+    reachDP: boolean,
+    clearDP: boolean
 }

@@ -6,9 +6,12 @@ const FirstSegmentSchema = new Schema({
     density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
-    distanceToDP: { type: Number, required: true },
+    altitudeInDP: { type: Number },
     timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true }
+    distanceToFinish: { type: Number, required: true },
+    timeToDP: { type: Number },
+    reachDP: { type: Number },
+    clearDP: { type: Number }
 });
 
 const SecondSegmentSchema = new Schema({
@@ -16,9 +19,12 @@ const SecondSegmentSchema = new Schema({
     density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
-    distanceToDP: { type: Number, required: true },
+    altitudeInDP: { type: Number },
     timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true }
+    distanceToFinish: { type: Number, required: true },
+    timeToDP: { type: Number },
+    reachDP: { type: Number },
+    clearDP: { type: Number }
 });
 
 const ThirdSegmentSchema = new Schema({
@@ -26,9 +32,12 @@ const ThirdSegmentSchema = new Schema({
     density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
     rateClimb: { type: Number, required: true },
-    distanceToDP: { type: Number, required: true },
+    altitudeInDP: { type: Number },
     timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true }
+    distanceToFinish: { type: Number, required: true },
+    timeToDP: { type: Number },
+    reachDP: { type: Number },
+    clearDP: { type: Number }
 });
 
 const ProcedureSchema = new Schema<Procedure> (
