@@ -4,6 +4,7 @@ export interface RateOfClimbGraphic {
     aircraft: ObjectId[];
     title: String;
     velocity: String;
+    segment: number;
     axis: Axis;
     pressureLines: PressureLine[];
     weightLines: WeightLines[];

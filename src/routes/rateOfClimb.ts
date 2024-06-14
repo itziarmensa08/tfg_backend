@@ -10,7 +10,7 @@ router.post('/', checkSession, postRateOfClimbGraphic);
 
 router.get('/:id', checkSession, getRateOfClimbGraphic);
 
-router.get('/aircraft/:id', checkSession, getRateOfClimbGraphicByAircraft);
+router.get('/aircraft/:id/:segment', checkSession, getRateOfClimbGraphicByAircraft);
 
 router.put('/:id', checkSession, updateRateOfClimbGraphic);
 

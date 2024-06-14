@@ -36,6 +36,10 @@ const ProcedureSchema = new Schema<RateOfClimbGraphic> (
             type: String,
             required: true,
         },
+        segment: {
+            type: Number,
+            required: true,
+        },
         axis: { type: AxisSchema, required: true },
         pressureLines: { type: [PressureLinesSchema], required: true },
         weightLines: { type: [WeightLinesSchema], required: true },
