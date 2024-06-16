@@ -11,12 +11,11 @@ export interface Procedure {
     dpDistance: Number;
     dpAltitude: Number;
     weight: Number;
-    firstSegment: FirstSegment,
-    secondSegment: SecondSegment,
-    thirdSegment: ThirdSegment
+    nMotors: NMotors;
+    failure: Failure;
 }
 
-export interface FirstSegment {
+export interface Segment {
     velocityIAS: Number,
     density: Number,
     velocityTAS: Number,
@@ -29,28 +28,14 @@ export interface FirstSegment {
     clearDP: boolean
 }
 
-export interface SecondSegment {
-    velocityIAS: Number,
-    density: Number,
-    velocityTAS: Number,
-    rateClimb: Number,
-    timeToFinish: Number,
-    distanceToFinish: Number,
-    altitudeInDP: Number,
-    timeToDP: Number,
-    reachDP: boolean,
-    clearDP: boolean
+export interface NMotors {
+    firstSegment: Segment,
+    secondSegment: Segment,
+    thirdSegment: Segment
 }
 
-export interface ThirdSegment {
-    velocityIAS: Number,
-    density: Number,
-    velocityTAS: Number,
-    rateClimb: Number,
-    timeToFinish: Number,
-    distanceToFinish: Number,
-    altitudeInDP: Number,
-    timeToDP: Number,
-    reachDP: boolean,
-    clearDP: boolean
+export interface Failure {
+    firstSegment: Segment,
+    secondSegment: Segment,
+    thirdSegment: Segment
 }

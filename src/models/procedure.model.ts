@@ -1,7 +1,7 @@
 import {Schema, model} from "mongoose";
 import { Procedure } from "../interfaces/procedure.interface";
 
-const FirstSegmentSchema = new Schema({
+const Segment = new Schema({
     velocityIAS: { type: Number, required: true },
     density: { type: Number, required: true },
     velocityTAS: { type: Number, required: true },
@@ -14,31 +14,18 @@ const FirstSegmentSchema = new Schema({
     clearDP: { type: Number }
 });
 
-const SecondSegmentSchema = new Schema({
-    velocityIAS: { type: Number, required: true },
-    density: { type: Number, required: true },
-    velocityTAS: { type: Number, required: true },
-    rateClimb: { type: Number, required: true },
-    altitudeInDP: { type: Number },
-    timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true },
-    timeToDP: { type: Number },
-    reachDP: { type: Number },
-    clearDP: { type: Number }
+const NMotors = new Schema({
+    firstSegment: Segment,
+    secondSegment: Segment,
+    thirdSegment: Segment
 });
 
-const ThirdSegmentSchema = new Schema({
-    velocityIAS: { type: Number, required: true },
-    density: { type: Number, required: true },
-    velocityTAS: { type: Number, required: true },
-    rateClimb: { type: Number, required: true },
-    altitudeInDP: { type: Number },
-    timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true },
-    timeToDP: { type: Number },
-    reachDP: { type: Number },
-    clearDP: { type: Number }
+const Failure = new Schema({
+    firstSegment: Segment,
+    secondSegment: Segment,
+    thirdSegment: Segment
 });
+
 
 const ProcedureSchema = new Schema<Procedure> (
     {
@@ -84,9 +71,8 @@ const ProcedureSchema = new Schema<Procedure> (
             type: Number,
             required: true,
         },
-        firstSegment: FirstSegmentSchema,
-        secondSegment: SecondSegmentSchema,
-        thirdSegment: ThirdSegmentSchema
+        nMotors: NMotors,
+        failure: Failure
     },
     {
         timestamps: true,
