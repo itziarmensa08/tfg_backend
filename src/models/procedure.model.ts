@@ -21,6 +21,8 @@ const NMotors = new Schema({
 });
 
 const Failure = new Schema({
+    initialElevation: { type: Number },
+    distanceToInitial: { type: Number },
     firstSegment: Segment,
     secondSegment: Segment,
     thirdSegment: Segment

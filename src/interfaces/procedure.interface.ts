@@ -35,6 +35,8 @@ export interface NMotors {
 }
 
 export interface Failure {
+    initialElevation: number,
+    distanceToInitial: number,
     firstSegment: Segment,
     secondSegment: Segment,
     thirdSegment: Segment

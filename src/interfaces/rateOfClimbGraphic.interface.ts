@@ -5,6 +5,7 @@ export interface RateOfClimbGraphic {
     title: String;
     velocity: String;
     segment: number;
+    state: String; // failure / nMotors
     axis: Axis;
     pressureLines: PressureLine[];
     weightLines: WeightLines[];
