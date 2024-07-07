@@ -21,11 +21,21 @@ const NMotors = new Schema({
 });
 
 const Failure = new Schema({
-    initialElevation: { type: Number },
-    distanceToInitial: { type: Number },
-    firstSegment: Segment,
-    secondSegment: Segment,
-    thirdSegment: Segment
+    initialElevation: { type: Number, required: true },
+    distanceToInitial: { type: Number, required: true },
+    altitude: {
+        state: { type: Boolean, required: true },
+        dpDistance: { type: Number, required: true },
+        dpElevation: { type: Number, required: true },
+        firstSegment: { type: Segment, required: true },
+        secondSegment: { type: Segment, required: true },
+        thirdSegment: { type: Segment, required: true }
+    },
+    gradient: {
+        state: { type: Boolean, required: true },
+        dpDistance: { type: Number, required: true },
+        gradientValue: { type: Number, required: true }
+    }
 });
 
 

@@ -37,7 +37,17 @@ export interface NMotors {
 export interface Failure {
     initialElevation: number,
     distanceToInitial: number,
-    firstSegment: Segment,
-    secondSegment: Segment,
-    thirdSegment: Segment
+    altitude: {
+        state: boolean,
+        dpDistance: number,
+        dpElevation: number,
+        firstSegment: Segment,
+        secondSegment: Segment,
+        thirdSegment: Segment
+    },
+    gradient: {
+        state: boolean,
+        dpDistance: number,
+        gradientValue: number
+    },
 }
