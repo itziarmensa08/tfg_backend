@@ -12,8 +12,8 @@ const obtainVYtable = async (id: string) => {
     return response;
 }
 
-const obtainVYtableByAircraft = async (idAircraft: string) => {
-    const response = await VYtableModel.findOne({ aircraft: { $in: [idAircraft] } });
+const obtainVYtableByAircraft = async (idAircraft: string, state: String) => {
+    const response = await VYtableModel.findOne({ aircraft: { $in: [idAircraft] }, state: state });
     return response;
 }
 

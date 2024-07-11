@@ -12,7 +12,7 @@ router.get('/:id', checkSession, getVYtable);
 
 router.post('/filterData', checkSession, getClosestRows);
 
-router.get('/aircraft/:id', checkSession, getVYtableByAircraft);
+router.get('/aircraft/:id/:state', checkSession, getVYtableByAircraft);
 
 router.put('/:id', checkSession, updateVYtable);
 

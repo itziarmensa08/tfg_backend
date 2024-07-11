@@ -4,6 +4,7 @@ export interface VYtable {
     aircraft: ObjectId[];
     title: String;
     rows: VYtableRow[];
+    state: String;
 }
 
 export interface VYtableRow {

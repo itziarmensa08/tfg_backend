@@ -12,8 +12,8 @@ const obtainRateOfClimbGraphic = async (id: string) => {
     return response;
 }
 
-const obtainRateOfClimbGraphicByAircraft = async (idAircraft: string, segment: number) => {
-    const response = await RateOfClimbGrpahicModel.findOne({ aircraft: { $in: [idAircraft] }, segment: segment });
+const obtainRateOfClimbGraphicByAircraft = async (idAircraft: string, segment: number, state: string) => {
+    const response = await RateOfClimbGrpahicModel.findOne({ aircraft: { $in: [idAircraft] }, segment: segment, state: state });
     return response;
 }
 

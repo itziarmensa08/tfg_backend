@@ -38,6 +38,10 @@ const VYtableSchema = new Schema<VYtable>(
             type: String,
             required: true,
         },
+        state: {
+            type: String,
+            required: true,
+        },
         rows: {
             type: [VYtableRowSchema],
             required: true,

@@ -16,7 +16,8 @@ const getRateOfClimbGraphicByAircraft = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const segment = parseInt(req.params.segment, 10);
-        const response = await obtainRateOfClimbGraphicByAircraft(id, segment);
+        const state = req.params.state;
+        const response = await obtainRateOfClimbGraphicByAircraft(id, segment, state);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error getRateOfClimbGraphicByAircraft: ${e}`)

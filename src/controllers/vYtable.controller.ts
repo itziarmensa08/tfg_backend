@@ -14,7 +14,8 @@ const getVYtable = async (req: Request, res: Response) => {
 const getVYtableByAircraft = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        const response = await obtainVYtableByAircraft(id);
+        const state = req.params.state;
+        const response = await obtainVYtableByAircraft(id, state);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error getVYtable: ${e}`)
