@@ -66,7 +66,7 @@ const calculateDistance = async (graphicId: string, gradient: number, altitud: n
             xLower,
             typeof upper.gradient === 'number' ? upper.gradient : parseFloat(upper.gradient.toString()),
             xUpper,
-            altitud
+            gradient
         );
     }
 
@@ -101,15 +101,15 @@ function findClosestGradientLines(pressureLines: GradientLine[], gradient: numbe
     return { lower, upper };
 }
 
-function interpolateWithinPressureLine(points: Coordinates[], temperature: number): number {
+function interpolateWithinPressureLine(points: Coordinates[], altitude: number): number {
     for (let i = 0; i < points.length - 1; i++) {
         const p1 = points[i];
         const p2 = points[i + 1];
-        if ((p1.y <= temperature && p2.y >= temperature) || (p1.y >= temperature && p2.y <= temperature)) {
-            return interpolate(p1.y, p1.x, p2.y, p2.x, temperature);
+        if ((p1.y <= altitude && p2.y >= altitude) || (p1.y >= altitude && p2.y <= altitude)) {
+            return interpolate(p1.y, p1.x, p2.y, p2.x, altitude);
         }
     }
-    throw new Error("Temperature is out of the bounds of the given points");
+    throw new Error("Altitude is out of the bounds of the given points");
 }
 
 function interpolate(x1: number, y1: number, x2: number, y2: number, x: number): number {
