@@ -42,8 +42,8 @@ const addVYtableRow = async (VYtableId: string, VYtableData: VYtableRow) => {
     return updatedVYtable;
 };
 
-const obtainClosestRows = async (pressure: number, grossWeight: number, idAircraft: string) => {
-    const VYtable = await VYtableModel.findOne({ aircraft: idAircraft });
+const obtainClosestRows = async (pressure: number, grossWeight: number, idAircraft: string, state: String) => {
+    const VYtable = await VYtableModel.findOne({ aircraft: { $in: [idAircraft] }, state: state });
 
     if (!VYtable) {
         throw new Error("VYtable not found for the specified aircraft");

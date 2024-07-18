@@ -34,7 +34,11 @@ const Failure = new Schema({
     gradient: {
         state: { type: Boolean, required: true },
         dpDistance: { type: Number, required: true },
-        gradientValue: { type: Number, required: true }
+        gradientValue: { type: Number, required: true },
+        finalGradient: { type: Number, required: true },
+        firstSegment: { type: Segment, required: true },
+        secondSegment: { type: Segment, required: true },
+        thirdSegment: { type: Segment, required: true }
     }
 });
 

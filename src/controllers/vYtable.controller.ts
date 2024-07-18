@@ -78,7 +78,8 @@ const getClosestRows = async (req: Request, res: Response) => {
         const pressure = req.body.pressure;
         const grossWeight = req.body.grossWeight;
         const idAircraft = req.body.idAircraft;
-        const response = await obtainClosestRows(pressure, grossWeight, idAircraft);
+        const state = req.body.state;
+        const response = await obtainClosestRows(pressure, grossWeight, idAircraft, state);
         res.status(200).send(response);
     } catch (e) {
         res.status(500).json(`Error getClosestRows: ${e}`)

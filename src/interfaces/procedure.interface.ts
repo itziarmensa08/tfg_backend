@@ -48,6 +48,10 @@ export interface Failure {
     gradient: {
         state: boolean,
         dpDistance: number,
-        gradientValue: number
+        gradientValue: number,
+        finalGradient: number,
+        firstSegment: Segment,
+        secondSegment: Segment,
+        thirdSegment: Segment
     },
 }
