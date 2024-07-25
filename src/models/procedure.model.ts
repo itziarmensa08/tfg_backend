@@ -10,8 +10,8 @@ const Segment = new Schema({
     timeToFinish: { type: Number },
     distanceToFinish: { type: Number },
     timeToDP: { type: Number },
-    reachDP: { type: Number },
-    clearDP: { type: Number }
+    reachDP: { type: Boolean },
+    clearDP: { type: Boolean }
 });
 
 const NMotors = new Schema({

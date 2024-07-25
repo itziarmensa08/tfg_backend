@@ -26,8 +26,8 @@ export interface Segment {
     distanceToFinish: Number,
     altitudeInDP: Number,
     timeToDP: Number,
-    reachDP: boolean,
-    clearDP: boolean
+    reachDP: Boolean,
+    clearDP: Boolean
 }
 
 export interface NMotors {
@@ -40,7 +40,7 @@ export interface Failure {
     initialElevation: number,
     distanceToInitial: number,
     altitude: {
-        state: boolean,
+        state: Boolean,
         dpDistance: number,
         dpElevation: number,
         firstSegment: Segment,
@@ -48,7 +48,7 @@ export interface Failure {
         thirdSegment: Segment
     },
     gradient: {
-        state: boolean,
+        state: Boolean,
         dpDistance: number,
         gradientValue: number,
         finalGradient: number,

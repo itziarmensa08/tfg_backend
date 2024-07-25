@@ -3,7 +3,7 @@ import ProcedureModel from "../models/procedure.model";
 
 
 const obtainProcedures = async () => {
-    const response = await ProcedureModel.find({});
+    const response = await ProcedureModel.find({}).populate(['aircraft', 'airport']);
     return response;
 }
 
