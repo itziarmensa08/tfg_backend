@@ -2,13 +2,13 @@ import {Schema, model} from "mongoose";
 import { Procedure } from "../interfaces/procedure.interface";
 
 const Segment = new Schema({
-    velocityIAS: { type: Number, required: true },
-    density: { type: Number, required: true },
-    velocityTAS: { type: Number, required: true },
-    rateClimb: { type: Number, required: true },
+    velocityIAS: { type: Number },
+    density: { type: Number },
+    velocityTAS: { type: Number },
+    rateClimb: { type: Number },
     altitudeInDP: { type: Number },
-    timeToFinish: { type: Number, required: true },
-    distanceToFinish: { type: Number, required: true },
+    timeToFinish: { type: Number },
+    distanceToFinish: { type: Number },
     timeToDP: { type: Number },
     reachDP: { type: Number },
     clearDP: { type: Number }
@@ -25,20 +25,20 @@ const Failure = new Schema({
     distanceToInitial: { type: Number, required: true },
     altitude: {
         state: { type: Boolean, required: true },
-        dpDistance: { type: Number, required: true },
-        dpElevation: { type: Number, required: true },
-        firstSegment: { type: Segment, required: true },
-        secondSegment: { type: Segment, required: true },
-        thirdSegment: { type: Segment, required: true }
+        dpDistance: { type: Number },
+        dpElevation: { type: Number },
+        firstSegment: { type: Segment },
+        secondSegment: { type: Segment },
+        thirdSegment: { type: Segment }
     },
     gradient: {
         state: { type: Boolean, required: true },
-        dpDistance: { type: Number, required: true },
-        gradientValue: { type: Number, required: true },
-        finalGradient: { type: Number, required: true },
-        firstSegment: { type: Segment, required: true },
-        secondSegment: { type: Segment, required: true },
-        thirdSegment: { type: Segment, required: true }
+        dpDistance: { type: Number },
+        gradientValue: { type: Number },
+        finalGradient: { type: Number },
+        firstSegment: { type: Segment },
+        secondSegment: { type: Segment },
+        thirdSegment: { type: Segment }
     }
 });
 
@@ -85,6 +85,14 @@ const ProcedureSchema = new Schema<Procedure> (
         },
         weight: {
             type: Number,
+            required: true,
+        },
+        procedureN: {
+            type: String,
+            required: true,
+        },
+        procedureN1: {
+            type: String,
             required: true,
         },
         nMotors: NMotors,

@@ -13,6 +13,8 @@ export interface Procedure {
     weight: Number;
     nMotors: NMotors;
     failure: Failure;
+    procedureN: String;
+    procedureN1: String;
 }
 
 export interface Segment {
