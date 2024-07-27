@@ -1,4 +1,4 @@
-FROM node:14.21.3
+FROM node:21.7.1
 
 RUN npm install -g ts-node typescript
 
