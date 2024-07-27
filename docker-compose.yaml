@@ -9,8 +9,3 @@ services:
       volumes:
         - './data:/data/db'
       restart: always
-  backendtfg:
-      image: backendtfg/backend:latest
-      ports:
-        - 4002:4002
-      restart: always
