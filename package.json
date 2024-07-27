@@ -1,10 +1,10 @@
 {
   "name": "tfg-backend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/app.ts"
+    "dev": "nodemon --exec ts-node ./src/app.ts"
   },
   "keywords": [],
   "author": "",
