@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { connect } from "mongoose";
 
-async function dbConnect(): Promise<void> {
+export async function dbConnect(): Promise<void> {
     const DB_URI = process.env.DB_URI;
     if (!DB_URI) {
         console.error("DB_URI is not defined");
@@ -15,5 +15,3 @@ async function dbConnect(): Promise<void> {
         process.exit(1);
     }
 }
-
-export default dbConnect;
