@@ -11,11 +11,6 @@ export async function dbConnect(): Promise<void> {
     const options: ConnectOptions = {
         serverSelectionTimeoutMS: 30000,
     };
-    try {
-        await connect(DB_URI, options);
-        console.log("Connection Ready");
-    } catch (error) {
-        console.error("Connection Error:", error);
-        process.exit(1);
-    }
+    await connect(DB_URI, options);
 }
+

@@ -6,13 +6,18 @@ import { dbConnect } from './config/mongo';
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use(router);
-dbConnect();
-
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-    console.log(`Listening in port: ${PORT}`)
+    console.log(`Listening in port: ${PORT}`);
+    app.use(cors());
+    app.use(express.json());
+    app.use(router);
+    dbConnect()
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch(err => {
+        console.error('Connection Error:', err);
+    });
 });
