@@ -13,11 +13,5 @@ app.listen(PORT, () => {
     app.use(cors());
     app.use(express.json());
     app.use(router);
-    dbConnect()
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch(err => {
-        console.error('Connection Error:', err);
-    });
+    dbConnect();
 });

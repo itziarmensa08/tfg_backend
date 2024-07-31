@@ -8,9 +8,13 @@ export async function dbConnect(): Promise<void> {
         console.error("DB_URI is not defined");
         process.exit(1);
     }
-    const options: ConnectOptions = {
-        serverSelectionTimeoutMS: 30000,
-    };
-    await connect(DB_URI, options);
+    connect(DB_URI)
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch(err => {
+        console.error('Connection Error:', err);
+        setTimeout(dbConnect, 5000);
+    });
 }
 
