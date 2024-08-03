@@ -25,6 +25,10 @@ const UserSchema = new Schema<User> (
             type: String,
             required: true
         },
+        validated: {
+            type: Boolean,
+            required: true
+        },
         role: {
             type: String,
             enum: ['admin', 'user'],

@@ -28,10 +28,25 @@ const loginUser = async (auth: Auth) => {
     const isCorrect = await verified(auth.password, existingUser.password);
     if(!isCorrect) return 'PASSWORD_INCORRECT';
 
+    const isValidated = existingUser.validated;
+    if (!isValidated) return 'NOT_VALIDATED'
+
     const token = generateToken(existingUser.username);
     const data = { token: token, user: existingUser};
 
     return data;
 }
 
-export { registerUser, loginUser };
+const validateUser = async (id: string) => {
+    const existingUser = await UserModel.findOne({ _id: id });
+    if (!existingUser) return 'NOT_FOUND_USER';
+
+    const response = await UserModel.findOneAndUpdate(
+        { _id: id },
+        { $set: { validated: true } },
+        { new: true }
+    );
+    return response;
+};
+
+export { registerUser, loginUser, validateUser };

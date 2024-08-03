@@ -9,7 +9,7 @@ export interface User extends Auth {
     dateBorn?: Date;
     profileImage?: String;
     language: 'ca' | 'es' | 'en_US';
-    tasks: Event[]
+    tasks: Event[];
 }
 
 export interface Event {
