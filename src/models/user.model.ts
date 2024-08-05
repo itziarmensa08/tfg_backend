@@ -59,6 +59,10 @@ const UserSchema = new Schema<User> (
                 type: String,
                 required: true
             },
+            isCompleted: {
+                type: Boolean,
+                required: true
+            },
         }]
     },
     {

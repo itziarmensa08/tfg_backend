@@ -29,5 +29,14 @@ const addTask = async (id: string, task: Event) => {
     return updateResult
 }
 
+const completeTask = async (userId: string, taskId: string): Promise<any> => {
+    const updateResult = await UserModel.updateOne(
+        { _id: userId, 'tasks._id': taskId },
+        { $set: { 'tasks.$.isCompleted': true } }
+    );
 
-export { obtainUsers, obtainUser, putUser, removeUser, addTask };
+    return updateResult;
+};
+
+
+export { obtainUsers, obtainUser, putUser, removeUser, addTask, completeTask };

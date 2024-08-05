@@ -15,4 +15,5 @@ export interface User extends Auth {
 export interface Event {
     date: Date;
     title: String;
+    isCompleted: boolean;
 }

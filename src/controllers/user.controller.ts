@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addTask, obtainUser, obtainUsers, putUser, removeUser } from "../services/user.service"
+import { addTask, completeTask, obtainUser, obtainUsers, putUser, removeUser } from "../services/user.service"
 
 const getUser = async (req: Request, res: Response) => {
     try {
@@ -52,4 +52,15 @@ const addTaskUser = async (req: Request, res: Response) => {
     }
 }
 
-export {getUser, getUsers, updateUser, deleteUser, addTaskUser};
+const completeTaskUser = async (req: Request, res: Response) => {
+    try {
+        const idUser = req.params.idUser;
+        const idTask = req.params.idTask;
+        const response = await completeTask(idUser, idTask);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error completing task: ${e}`)
+    }
+}
+
+export {getUser, getUsers, updateUser, deleteUser, addTaskUser, completeTaskUser};
