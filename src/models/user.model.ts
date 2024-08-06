@@ -63,6 +63,10 @@ const UserSchema = new Schema<User> (
                 type: Boolean,
                 required: true
             },
+            remembered: {
+                type: Boolean,
+                required: true
+            },
         }]
     },
     {

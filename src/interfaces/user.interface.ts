@@ -16,4 +16,5 @@ export interface Event {
     date: Date;
     title: String;
     isCompleted: boolean;
+    remembered: boolean;
 }
