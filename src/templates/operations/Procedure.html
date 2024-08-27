@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Page Conversion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #000080;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 120px;
+        }
+        .header-text {
+            text-align: center;
+        }
+        .header-text h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000080;
+        }
+        .header-text h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #000080;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 16px;
+            color: #000080;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr); /* Ensure the columns divide the total width equally */
+            gap: 5px;
+            width: 180mm; /* Set the total width of the grid container */
+            justify-content: start; /* Ensure the grid starts from the left */
+            margin: 20px 0;
+        }
+        .grid-item {
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 1px solid #000080;
+        }
+        .section-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #000;
+            font-weight: bold;
+        }
+        .content-box {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 10px;
+            color: #000;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #000080;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://res.cloudinary.com/duvdq4fkz/image/upload/v1724777263/eiiyk0ja0leywsui5pj0.png" alt="Flightline Logo">
+        <div class="header-text">
+            <h1>Ficha para Análisis de Aeropuerto</h1>
+            <h2>Sheet for Airport Analysis</h2>
+        </div>
+        <div class="header-right">
+            FLOTA SA-227BC<br>Fleet
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item">P</div>
+        <div class="grid-item">N</div>
+        <div class="grid-item">A</div>
+        <div style="width: 12px;"></div>
+        <div class="grid-item">L</div>
+        <div class="grid-item">E</div>
+        <div class="grid-item">P</div>
+        <div class="grid-item">P</div>
+    </div>
+
+    <div class="section-title">CALCULOS DEP RWY 33</div>
+    <div class="section-title">ASCENSO N MOTORES (Hasta OCA)</div>
+
+    <div class="content-box">
+        <p>PA=1506 ft</p>
+        <p>TºC ref: 28ºC</p>
+        <p>Vx = V50 = 124 KTS (TAS = 127 KTS)</p>
+        <p>VY = 147 KTS (TAS = 151 KTS)</p>
+        <p>ROCV50 (TOW=14.500lbs / 28ºC) = 2.320 ft/min</p>
+        <p>ROCVY (TOW=14.500lbs/ 28ºC) = 2.600ft/min</p>
+        <p>OCA = 2006ft</p>
+    </div>
+
+    <div class="content-box">
+        <p>El DcPt para todas las SID’s se encuentra a 1,1 NM del DER (crossing PPN VOR R-025º)</p>
+    </div>
+
+    <div class="footer">
+        PE(OPS) 04 F01 R05<br>Página 3
+    </div>
+
+</body>
+</html>
