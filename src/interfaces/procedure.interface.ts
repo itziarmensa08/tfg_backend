@@ -6,8 +6,8 @@ export interface Procedure {
     sidDoc: String;
     rwyDoc: String;
     sidName: String;
-    rwyName: String;
-    dpName: String;
+    rwyName: string;
+    dpName: string;
     dpDistance: Number;
     dpAltitude: Number;
     weight: Number;
@@ -24,7 +24,7 @@ export interface Segment {
     rateClimb: Number,
     timeToFinish: Number,
     distanceToFinish: Number,
-    altitudeInDP: Number,
+    altitudeInDP: number,
     timeToDP: Number,
     reachDP: Boolean,
     clearDP: Boolean

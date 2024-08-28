@@ -68,6 +68,12 @@
             flex-direction: column;
             align-items: center;
         }
+        .conclusion-box {
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 10px;
+            color: #000;
+        }
         .footer {
             font-size: 12px;
             text-align: center;
@@ -84,40 +90,69 @@
             <h2>Sheet for Airport Analysis</h2>
         </div>
         <div class="header-right">
-            FLOTA SA-227BC<br>Fleet
+            FLOTA {{metro}}<br>Fleet
         </div>
     </div>
 
     <div class="grid-container">
-        <div class="grid-item">P</div>
-        <div class="grid-item">N</div>
-        <div class="grid-item">A</div>
+        <div class="grid-item">{{airport1}}</div>
+        <div class="grid-item">{{airport2}}</div>
+        <div class="grid-item">{{airport3}}</div>
         <div style="width: 12px;"></div>
-        <div class="grid-item">L</div>
-        <div class="grid-item">E</div>
-        <div class="grid-item">P</div>
-        <div class="grid-item">P</div>
+        <div class="grid-item">{{airport4}}</div>
+        <div class="grid-item">{{airport5}}</div>
+        <div class="grid-item">{{airport6}}</div>
+        <div class="grid-item">{{airport7}}</div>
     </div>
 
-    <div class="section-title">CALCULOS DEP RWY 33</div>
-    <div class="section-title">ASCENSO N MOTORES (Hasta OCA)</div>
+    <div class="section-title">CALCULOS DEP {{rwy}}</div>
+    <div class="section-title">ASCENSO N MOTORES (Hasta DP: {{dp}})</div>
 
     <div class="content-box">
-        <p>PA=1506 ft</p>
-        <p>TºC ref: 28ºC</p>
-        <p>Vx = V50 = 124 KTS (TAS = 127 KTS)</p>
-        <p>VY = 147 KTS (TAS = 151 KTS)</p>
-        <p>ROCV50 (TOW=14.500lbs / 28ºC) = 2.320 ft/min</p>
-        <p>ROCVY (TOW=14.500lbs/ 28ºC) = 2.600ft/min</p>
-        <p>OCA = 2006ft</p>
+        <p>PA = {{elevation}} ft</p>
+        <p>TºC ref: {{temp}}ºC</p>
+        <p>Distancia al DP: {{dpDistance}} NM</p>
+        <p>Altitud en el DP: {{dpAltitude}} ft</p>
     </div>
 
+    {{#if firstSegmentN}}
     <div class="content-box">
-        <p>El DcPt para todas las SID’s se encuentra a 1,1 NM del DER (crossing PPN VOR R-025º)</p>
+        <p style="font-weight: bold;">1r Segmento (0 ft - {{heightN1}} ft):</p>
+        <p>Vx = V50 = {{iasN1}} KTS (TAS = {{tasN1}} KTS)</p>
+        <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN1}} ft/min</p>
     </div>
 
-    <div class="footer">
-        PE(OPS) 04 F01 R05<br>Página 3
+    <div class="conclusion-box">
+        <p>{{descN1}}</p>
+    </div>
+    {{/if firstSegmentN}}
+
+    {{#if secondSegmentN}}
+    <div class="content-box">
+        <p style="font-weight: bold;">2o Segmento ({{heightN1}} ft - {{heightN2}} ft):</p>
+        <p>Vx = V50 = {{iasN2}} KTS (TAS = {{tasN2}} KTS)</p>
+        <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN2}} ft/min</p>
+    </div>
+
+    <div class="conclusion-box">
+        <p>{{descN2}}</p>
+    </div>
+    {{/if secondSegmentN}}
+
+    {{#if thirdSegmentN}}
+    <div class="content-box">
+        <p style="font-weight: bold;">3r Segmento (> {{heightN3}} ft):</p>
+        <p>Vx = V50 = {{iasN3}} KTS (TAS = {{tasN3}} KTS)</p>
+        <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN3}} ft/min</p>
+    </div>
+
+    <div class="conclusion-box">
+        <p>{{descN3}}</p>
+    </div>
+    {{/if thirdSegmentN}}
+
+    <div class="conclusion-box">
+        <p>Finalmente, llegamos a la conclusión que {{conclusionN1}}</p>
     </div>
 
 </body>

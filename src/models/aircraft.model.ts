@@ -14,6 +14,24 @@ const AircraftSchema = new Schema<Aircraft> (
         profileImage: {
             type: String,
         },
+        profile: {
+            nMotors: {
+                heightFirstSegment: {
+                    type: Number,
+                },
+                heightSecondSegment: {
+                    type: Number,
+                }
+            },
+            failure: {
+                heightFirstSegment: {
+                    type: Number,
+                },
+                heightSecondSegment: {
+                    type: Number,
+                }
+            },
+        },
     },
     {
         timestamps: true,

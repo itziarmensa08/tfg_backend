@@ -3,6 +3,6 @@ import { generatePdfCtrl } from "../controllers/pdf.controller";
 
 const router = Router();
 
-router.post('/generate', generatePdfCtrl);
+router.post('/generate/:id', generatePdfCtrl);
 
 export { router };
