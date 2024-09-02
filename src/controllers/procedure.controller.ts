@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addProcedure, obtainProcedure, obtainProcedures, putProcedure, removeProcedure } from "../services/procedure.service";
+import { addProcedure, obtainAirportsWithProcedures, obtainProcedure, obtainProcedures, putProcedure, removeProcedure } from "../services/procedure.service";
 
 const getProcedure = async (req: Request, res: Response) => {
     try {
@@ -51,4 +51,13 @@ const deleteProcedure = async (req: Request, res: Response) => {
     }
 }
 
-export {getProcedure, getProcedures, postProcedure, updateProcedure, deleteProcedure};
+const getAirportsWithProcedures = async (req: Request, res: Response) => {
+    try {
+        const response = await obtainAirportsWithProcedures();
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error deleteProcedure: ${e}`)
+    }
+}
+
+export {getProcedure, getProcedures, postProcedure, updateProcedure, deleteProcedure, getAirportsWithProcedures};

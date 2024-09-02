@@ -67,7 +67,7 @@ const addTaskUser = async (req: Request, res: Response) => {
 
                 template = template.replace('{date}', formattedDate);
                 const mailOptions = {
-                    from: 'itziar.mensa08@gmail.com',
+                    from: 'h24@flightlinebcn.com',
                     to: `${user.email}`,
                     subject: 'Nueva tarea',
                     html: template,

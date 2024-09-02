@@ -27,7 +27,7 @@ const registerCtrl = async ({body}: Request, res: Response) => {
                     template = template.replace('{name}', body.name);
                     template = template.replace('{url}', `${process.env.FRONTEND_URL}#/login/${id}`);
                     const mailOptions = {
-                        from: 'itziar.mensa08@gmail.com',
+                        from: 'h24@flightlinebcn.com',
                         to: body.email,
                         subject: 'Confirmar email',
                         html: template,

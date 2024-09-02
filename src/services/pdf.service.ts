@@ -102,14 +102,14 @@ const generatePdf = async (procedure: Procedure, templatePath: string, outputPat
                 ' minutos y recorremos una distancia de ' + procedure.nMotors.firstSegment.distanceToFinish.toFixed(2) +
                 ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud de ' +
                 (procedure.nMotors.firstSegment.altitudeInDP + airport?.elevation!).toFixed(2) +
-                ' ft. Por lo tanto, sobrepasamos los obstáculos.';
+                ' ft. Por lo tanto, sobrepasamos las restricciones.';
       html = html.replace('{{descN1}}', descN1.toString());
     } else {
       const descN1 = 'Tardamos en recorrer este primer segmento ' + procedure.nMotors.firstSegment.timeToFinish.toFixed(2) +
                 ' minutos y recorremos una distancia de ' + procedure.nMotors.firstSegment.distanceToFinish.toFixed(2) +
                 ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud en el DP de ' +
                 (procedure.nMotors.firstSegment.altitudeInDP + airport?.elevation!).toFixed(2) +
-                ' ft. Por lo tanto, no sobrepasamos los obstáculos.';
+                ' ft. Por lo tanto, no sobrepasamos las restricciones.';
       html = html.replace('{{descN1}}', descN1.toString());
     }
   }
@@ -144,14 +144,14 @@ const generatePdf = async (procedure: Procedure, templatePath: string, outputPat
                   ' minutos y recorremos una distancia de ' + procedure.nMotors.secondSegment.distanceToFinish.toFixed(2) +
                   ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud en el DP de ' +
                   (procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2) +
-                  ' ft. Por lo tanto, sobrepasamos los obstáculos.';
+                  ' ft. Por lo tanto, sobrepasamos las restricciones.';
         html = html.replace('{{descN2}}', descN2.toString());
       } else {
         const descN2 = 'Tardamos en recorrer este segundo segmento ' + procedure.nMotors.secondSegment.timeToFinish.toFixed(2) +
                   ' minutos y recorremos una distancia de ' + procedure.nMotors.secondSegment.distanceToFinish.toFixed(2) +
                   ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud de ' +
                   (procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2) +
-                  ' ft. Por lo tanto, no sobrepasamos los obstáculos.';
+                  ' ft. Por lo tanto, no sobrepasamos las restricciones.';
         html = html.replace('{{descN2}}', descN2.toString());
       }
     }
@@ -182,13 +182,13 @@ const generatePdf = async (procedure: Procedure, templatePath: string, outputPat
       const descN3 = 'Tardamos en alcanzar el DP ' + procedure.nMotors.thirdSegment.timeToDP.toFixed(2) +
                 ' minutos. En este punto hemos alcanzado un altitud en el DP de ' +
                 (procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2) +
-                ' ft. Por lo tanto, sobrepasamos los obstáculos.';
+                ' ft. Por lo tanto, sobrepasamos las restricciones.';
       html = html.replace('{{descN3}}', descN3.toString());
     } else {
       const descN3 = 'Tardamos en alcanzar el DP ' + procedure.nMotors.thirdSegment.timeToDP.toFixed(2) +
                 ' minutos. En este punto hemos alcanzado un altitud en el DP de ' +
                 (procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2) +
-                ' ft. Por lo tanto, no sobrepasamos los obstáculos.';
+                ' ft. Por lo tanto, no sobrepasamos las restricciones.';
       html = html.replace('{{descN3}}', descN3.toString());
     }
   } else {

@@ -1,4 +1,5 @@
 import { Procedure } from "../interfaces/procedure.interface";
+import AirportModel from "../models/airport.model";
 import ProcedureModel from "../models/procedure.model";
 
 
@@ -27,5 +28,21 @@ const removeProcedure = async (id: string) => {
     return response;
 }
 
+const obtainAirportsWithProcedures = async () => {
+    const procedureAggregation = await ProcedureModel.aggregate([
+        {
+            $group: {
+                _id: '$airport',
+            },
+        },
+    ]);
 
-export { obtainProcedures, obtainProcedure, addProcedure, putProcedure, removeProcedure };
+    const airportIds = procedureAggregation.map((doc) => doc._id);
+
+    const airports = await AirportModel.find({ _id: { $in: airportIds } });
+
+    return airports;
+}
+
+
+export { obtainProcedures, obtainProcedure, addProcedure, putProcedure, removeProcedure, obtainAirportsWithProcedures };
