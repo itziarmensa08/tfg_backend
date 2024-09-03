@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addProcedure, obtainAirportsWithProcedures, obtainProcedure, obtainProcedures, putProcedure, removeProcedure } from "../services/procedure.service";
+import { addProcedure, obtainAircraftsByAirport, obtainAirportsWithProcedures, obtainProcedure, obtainProcedures, obtainProceduresByAirportAndAircraft, putProcedure, removeProcedure } from "../services/procedure.service";
 
 const getProcedure = async (req: Request, res: Response) => {
     try {
@@ -56,8 +56,29 @@ const getAirportsWithProcedures = async (req: Request, res: Response) => {
         const response = await obtainAirportsWithProcedures();
         res.status(200).send(response);
     } catch (e) {
-        res.status(500).json(`Error deleteProcedure: ${e}`)
+        res.status(500).json(`Error getting airports: ${e}`)
     }
 }
 
-export {getProcedure, getProcedures, postProcedure, updateProcedure, deleteProcedure, getAirportsWithProcedures};
+const getAircraftsByAirport = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const response = await obtainAircraftsByAirport(id);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error getting aircrafts: ${e}`)
+    }
+}
+
+const getProceduresByAirportAndAircraft = async (req: Request, res: Response) => {
+    try {
+        const idAirport = req.params.idAirport;
+        const idAircraft = req.params.idAircraft;
+        const response = await obtainProceduresByAirportAndAircraft(idAirport, idAircraft);
+        res.status(200).send(response);
+    } catch (e) {
+        res.status(500).json(`Error getting procedures: ${e}`)
+    }
+}
+
+export {getProcedure, getProcedures, postProcedure, updateProcedure, deleteProcedure, getAirportsWithProcedures, getAircraftsByAirport, getProceduresByAirportAndAircraft};

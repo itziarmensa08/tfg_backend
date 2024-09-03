@@ -1,4 +1,5 @@
 import { Procedure } from "../interfaces/procedure.interface";
+import AircraftModel from "../models/aircraft.model";
 import AirportModel from "../models/airport.model";
 import ProcedureModel from "../models/procedure.model";
 
@@ -44,5 +45,24 @@ const obtainAirportsWithProcedures = async () => {
     return airports;
 }
 
+const obtainAircraftsByAirport = async (airportId: string) => {
+    const proceduresForAirport = await ProcedureModel.find({ airport: airportId });
 
-export { obtainProcedures, obtainProcedure, addProcedure, putProcedure, removeProcedure, obtainAirportsWithProcedures };
+    const aircraftIds = [...new Set(proceduresForAirport.map(procedure => procedure.aircraft))];
+
+    const aircrafts = await AircraftModel.find({ _id: { $in: aircraftIds } });
+
+    return aircrafts;
+};
+
+const obtainProceduresByAirportAndAircraft = async (airportId: string, aircraftId: string) => {
+    const procedures = await ProcedureModel.find({
+        airport: airportId,
+        aircraft: aircraftId,
+    });
+
+    return procedures;
+};
+
+
+export { obtainProcedures, obtainProcedure, addProcedure, putProcedure, removeProcedure, obtainAirportsWithProcedures, obtainAircraftsByAirport, obtainProceduresByAirportAndAircraft };
