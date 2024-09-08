@@ -70,7 +70,6 @@
         }
         .conclusion-box {
             padding: 10px;
-            margin-bottom: 20px;
             font-size: 10px;
             color: #000;
         }
@@ -154,6 +153,102 @@
     <div class="conclusion-box">
         <p>Finalmente, llegamos a la conclusión que {{conclusionN1}}</p>
     </div>
+
+    {{#if gradientRestriction}}
+    <div style="height: 30px;"></div>
+    <div class="section-title">ASCENSO N - 1 MOTORES</div>
+    <div class="conclusion-box">
+        <p>Tenemos la siguiente restricción de gradiente:</p>
+    </div>
+    <div class="content-box">
+        <p>Distancia: {{distanceGradientRestriction}} NM</p>
+        <p>Gradiente mínimo: {{minimGradient}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>Cálculos:</p>
+    </div>
+    {{#if firstSegmentGradientRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">1r Segmento (0 ft - {{height1Failure}} ft):</p>
+        <p>Vx = V50 = {{iasGradient1}} KTS (TAS = {{tasGradient1}} KTS)</p>
+        <p>Gradiente = {{gradient1}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descGradient1}}</p>
+    </div>
+    {{/if firstSegmentGradientRestriction}}
+    {{#if secondSegmentGradientRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">2o Segmento ({{height1Failure}} ft - {{height2Failure}} ft):</p>
+        <p>Vx = V50 = {{iasGradient2}} KTS (TAS = {{tasGradient2}} KTS)</p>
+        <p>Gradiente = {{gradient2}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descGradient2}}</p>
+    </div>
+    {{/if secondSegmentGradientRestriction}}
+    {{#if thirdSegmentGradientRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">3r Segmento (> {{height2Failure}} ft):</p>
+        <p>Vx = V50 = {{iasGradient3}} KTS (TAS = {{tasGradient3}} KTS)</p>
+        <p>ROC = {{gradient3}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descGradient3}}</p>
+    </div>
+    {{/if thirdSegmentGradientRestriction}}
+    <div class="conclusion-box">
+        <p>Finalmente, llegamos a la conclusión que {{conclusionGradient}}</p>
+    </div>
+    {{/if gradientRestriction}}
+
+    {{#if altitudeRestriction}}
+    <div style="height: 30px;"></div>
+    <div class="section-title">ASCENSO N - 1 MOTORES</div>
+    <div class="conclusion-box">
+        <p>Tenemos la siguiente restricción de altitud:</p>
+    </div>
+    <div class="content-box">
+        <p>Distancia al DP: {{distanceAltitudRestriction}} NM</p>
+        <p>Altitud en el DP: {{altitudDPAltitudRestriction}} ft</p>
+    </div>
+    <div class="conclusion-box">
+        <p>Cálculos:</p>
+    </div>
+    {{#if firstSegmentAltitudeRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">1r Segmento (0 ft - {{height1Failure}} ft):</p>
+        <p>Vx = V50 = {{iasAltitudet1}} KTS (TAS = {{tasAltitudet1}} KTS)</p>
+        <p>Gradiente = {{gradientAltitude1}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descAltitude1}}</p>
+    </div>
+    {{/if firstSegmentAltitudeRestriction}}
+    {{#if secondSegmentAltitudeRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">2o Segmento ({{height1Failure}} ft - {{height2Failure}} ft):</p>
+        <p>Vx = V50 = {{iasAltitude2}} KTS (TAS = {{tasAltitude2}} KTS)</p>
+        <p>Gradiente = {{gradientAltitude2}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descAltitude2}}</p>
+    </div>
+    {{/if secondSegmentAltitudeRestriction}}
+    {{#if thirdSegmentAltitudeRestriction}}
+    <div class="content-box">
+        <p style="font-weight: bold;">3r Segmento (> {{height2Failure}} ft):</p>
+        <p>Vx = V50 = {{iasAltitude3}} KTS (TAS = {{tasAltitude3}} KTS)</p>
+        <p>ROC = {{rocAltitude3}}</p>
+    </div>
+    <div class="conclusion-box">
+        <p>{{descAltitude3}}</p>
+    </div>
+    {{/if thirdSegmentAltitudeRestriction}}
+    <div class="conclusion-box">
+        <p>Finalmente, llegamos a la conclusión que {{conclusionAltitude}}</p>
+    </div>
+    {{/if altitudeRestriction}}
 
 </body>
 </html>
