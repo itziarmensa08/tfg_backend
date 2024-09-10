@@ -499,9 +499,7 @@ const generatePdf = async (procedure: Procedure, templatePath: string, outputPat
 
   html = html.replace('{{conclusionN1}}', conclusionN1.toString());
 
-  const browser = await puppeteer.launch({
-    ignoreDefaultArgs: ['--disable-extensions'],
-  });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   await page.setContent(html, { waitUntil: 'networkidle0' });
