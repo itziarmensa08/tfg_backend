@@ -4,8 +4,8 @@ import nodemailer = require('nodemailer');
 export const transporter = nodemailer.createTransport({
     service: 'Gmail',
         auth: {
-        user: 'itziar.mensa08@gmail.com', // generated ethereal user
-        pass: 'bgebtjrxekzztmgd', // generated ethereal password
+        user: 'h24@flightlinebcn.com', // generated ethereal user
+        pass: 'mqpwijsqjotkhthw', // generated ethereal password
     },
     tls: {
         rejectUnauthorized: false,
