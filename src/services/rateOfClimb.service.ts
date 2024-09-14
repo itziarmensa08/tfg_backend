@@ -120,6 +120,10 @@ const calculateRate = async (graphicId: string, temperature: number, altitud: nu
 
     adjustedPoints = adjustedPoints.filter(point => point.y >= (weight/1000));
 
+    if (adjustedPoints[adjustedPoints.length - 1].x < adjustedPoints[0].x) {
+        adjustedPoints.reverse();
+    }
+
     const finalPoint : Coordinates = {x: adjustedPoints[adjustedPoints.length - 1].x, y: graphic.axis.yWeight[0]};
 
     return { firstPoint, secondPoint, thirdPoint, adjustedPoints, finalPoint };

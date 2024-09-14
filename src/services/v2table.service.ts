@@ -87,6 +87,9 @@ const obtainClosestRows = async (pressure: number, grossWeight: number, temperat
     if (exactPressureRows.length > 0) {
         closestPressureRows = exactPressureRows;
     } else {
+        const lowerBound = Math.floor(pressure / 1000) * 1000;
+        const upperBound = lowerBound + 1000;
+
         closestPressureRows = await V2tableModel.aggregate([
             {
                 $match: { _id: v2table._id }
@@ -97,8 +100,8 @@ const obtainClosestRows = async (pressure: number, grossWeight: number, temperat
             {
                 $match: {
                     $or: [
-                        { "rows.pressure": { $lte: pressure } },
-                        { "rows.pressure": { $gte: pressure - 1000 } }
+                        { "rows.pressure": { $eq: lowerBound } },
+                        { "rows.pressure": { $eq: upperBound } }
                     ]
                 }
             },
