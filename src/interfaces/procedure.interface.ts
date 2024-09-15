@@ -18,6 +18,7 @@ export interface Procedure {
 }
 
 export interface Segment {
+    temperature: Number,
     velocityIAS: Number,
     density: Number,
     velocityTAS: Number,
