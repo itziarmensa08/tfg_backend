@@ -5,7 +5,7 @@ export interface Procedure {
     aircraft: ObjectId;
     sidDoc: String;
     rwyDoc: String;
-    sidName: String;
+    sidName: string;
     rwyName: string;
     dpName: string;
     dpDistance: Number;
@@ -23,7 +23,7 @@ export interface Segment {
     density: Number,
     velocityTAS: Number,
     rateClimb: Number,
-    timeToFinish: Number,
+    timeToFinish: number,
     distanceToFinish: Number,
     altitudeInDP: number,
     timeToDP: Number,

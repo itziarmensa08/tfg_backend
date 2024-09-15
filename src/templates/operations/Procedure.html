@@ -105,7 +105,8 @@
     </div>
 
     <div class="section-title">CALCULOS DEP {{rwy}}</div>
-    <div class="section-title">ASCENSO N MOTORES (Hasta DP: {{dp}})</div>
+    <div class="section-title">SIDS {{sids}}</div>
+    <div class="section-title">ASCENSO N MOTORES (Hasta {{dp}})</div>
 
     <div class="content-box">
         <p>PA = {{elevation}} ft</p>
@@ -117,7 +118,7 @@
     {{#if firstSegmentN}}
     <div class="content-box">
         <p style="font-weight: bold;">1r Segmento (0 ft - {{heightN1}} ft):</p>
-        <p>Vx = V50 = {{iasN1}} KTS (TAS = {{tasN1}} KTS)</p>
+        <p>V50 = {{iasN1}} KTS (TAS = {{tasN1}} KTS)</p>
         <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN1}} ft/min</p>
     </div>
 
@@ -129,8 +130,8 @@
     {{#if secondSegmentN}}
     <div class="content-box">
         <p style="font-weight: bold;">2o Segmento ({{heightN1}} ft - {{heightN2}} ft):</p>
-        <p>Vx = V50 = {{iasN2}} KTS (TAS = {{tasN2}} KTS)</p>
-        <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN2}} ft/min</p>
+        <p>Vy = {{iasN2}} KTS (TAS = {{tasN2}} KTS)</p>
+        <p>ROCVy (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN2}} ft/min</p>
     </div>
 
     <div class="conclusion-box">
@@ -141,8 +142,8 @@
     {{#if thirdSegmentN}}
     <div class="content-box">
         <p style="font-weight: bold;">3r Segmento (> {{heightN3}} ft):</p>
-        <p>Vx = V50 = {{iasN3}} KTS (TAS = {{tasN3}} KTS)</p>
-        <p>ROCV50 (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN3}} ft/min</p>
+        <p>Vy = {{iasN3}} KTS (TAS = {{tasN3}} KTS)</p>
+        <p>ROCVy (TOW={{weight}}lbs / {{temp}}ºC) = {{rateN3}} ft/min</p>
     </div>
 
     <div class="conclusion-box">
@@ -162,7 +163,7 @@
     </div>
     <div class="content-box">
         <p>Distancia: {{distanceGradientRestriction}} NM</p>
-        <p>Gradiente mínimo: {{minimGradient}}</p>
+        <p>Gradiente mínimo: {{minimGradient}} %</p>
     </div>
     <div class="conclusion-box">
         <p>Cálculos:</p>
@@ -170,8 +171,8 @@
     {{#if firstSegmentGradientRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">1r Segmento (0 ft - {{height1Failure}} ft):</p>
-        <p>Vx = V50 = {{iasGradient1}} KTS (TAS = {{tasGradient1}} KTS)</p>
-        <p>Gradiente = {{gradient1}}</p>
+        <p>V50 = {{iasGradient1}} KTS (TAS = {{tasGradient1}} KTS)</p>
+        <p>Gradiente = {{gradient1}} %</p>
     </div>
     <div class="conclusion-box">
         <p>{{descGradient1}}</p>
@@ -180,8 +181,8 @@
     {{#if secondSegmentGradientRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">2o Segmento ({{height1Failure}} ft - {{height2Failure}} ft):</p>
-        <p>Vx = V50 = {{iasGradient2}} KTS (TAS = {{tasGradient2}} KTS)</p>
-        <p>Gradiente = {{gradient2}}</p>
+        <p>Vyse = {{iasGradient2}} KTS (TAS = {{tasGradient2}} KTS)</p>
+        <p>Gradiente = {{gradient2}} %</p>
     </div>
     <div class="conclusion-box">
         <p>{{descGradient2}}</p>
@@ -190,8 +191,8 @@
     {{#if thirdSegmentGradientRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">3r Segmento (> {{height2Failure}} ft):</p>
-        <p>Vx = V50 = {{iasGradient3}} KTS (TAS = {{tasGradient3}} KTS)</p>
-        <p>ROC = {{gradient3}}</p>
+        <p>Vyse = {{iasGradient3}} KTS (TAS = {{tasGradient3}} KTS)</p>
+        <p>ROCVyse = {{gradient3}} ft/min</p>
     </div>
     <div class="conclusion-box">
         <p>{{descGradient3}}</p>
@@ -218,8 +219,8 @@
     {{#if firstSegmentAltitudeRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">1r Segmento (0 ft - {{height1Failure}} ft):</p>
-        <p>Vx = V50 = {{iasAltitudet1}} KTS (TAS = {{tasAltitudet1}} KTS)</p>
-        <p>Gradiente = {{gradientAltitude1}}</p>
+        <p>Vx = {{iasAltitudet1}} KTS (TAS = {{tasAltitudet1}} KTS)</p>
+        <p>Gradiente = {{gradientAltitude1}} %</p>
     </div>
     <div class="conclusion-box">
         <p>{{descAltitude1}}</p>
@@ -228,8 +229,8 @@
     {{#if secondSegmentAltitudeRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">2o Segmento ({{height1Failure}} ft - {{height2Failure}} ft):</p>
-        <p>Vx = V50 = {{iasAltitude2}} KTS (TAS = {{tasAltitude2}} KTS)</p>
-        <p>Gradiente = {{gradientAltitude2}}</p>
+        <p>Vyse = {{iasAltitude2}} KTS (TAS = {{tasAltitude2}} KTS)</p>
+        <p>Gradiente = {{gradientAltitude2}} %</p>
     </div>
     <div class="conclusion-box">
         <p>{{descAltitude2}}</p>
@@ -238,8 +239,8 @@
     {{#if thirdSegmentAltitudeRestriction}}
     <div class="content-box">
         <p style="font-weight: bold;">3r Segmento (> {{height2Failure}} ft):</p>
-        <p>Vx = V50 = {{iasAltitude3}} KTS (TAS = {{tasAltitude3}} KTS)</p>
-        <p>ROC = {{rocAltitude3}}</p>
+        <p>Vyse = {{iasAltitude3}} KTS (TAS = {{tasAltitude3}} KTS)</p>
+        <p>ROCVyse = {{rocAltitude3}} ft/min</p>
     </div>
     <div class="conclusion-box">
         <p>{{descAltitude3}}</p>

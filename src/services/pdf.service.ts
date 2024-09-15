@@ -33,6 +33,10 @@ const generatePdf = async (procedure: Procedure, templatePath: string, outputPat
 
   html = html.replace('{{rwy}}', rwy);
 
+  const sids = procedure.sidName || ''
+
+  html = html.replace('{{sids}}', sids);
+
   const dp = procedure.dpName || ''
 
   html = html.replace('{{dp}}', dp);
@@ -551,6 +555,10 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
     html = html.replace('{{rwy}}', rwy);
 
+    const sids = procedure.sidName || ''
+
+    html = html.replace('{{sids}}', sids);
+
     const dp = procedure.dpName || ''
 
     html = html.replace('{{dp}}', dp);
@@ -610,24 +618,60 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     }
 
     if (procedure.nMotors.firstSegment.reachDP == false) {
-      const descN1 = 'Tardamos en recorrer este primer segmento ' + procedure.nMotors.firstSegment.timeToFinish.toFixed(2) +
-                  ' minutos y recorremos una distancia de ' + procedure.nMotors.firstSegment.distanceToFinish.toFixed(2) +
-                  ' NM. En este punto aún no hemos alcanzado el DP.';
+      const descN1 = `
+        <p>Tardamos en recorrer este primer segmento:</p>
+        <p style="text-align: center;">
+          t = (${aircraft?.profile.nMotors.heightFirstSegment} ft - 50 ft) / (${procedure.nMotors.firstSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.firstSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h
+        </p>
+        <p>Y recorremos una distancia de:</p>
+        <p style="text-align: center;">
+          d = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.firstSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.firstSegment.distanceToFinish.toFixed(2)} NM
+        </p>
+        <p>En este punto aún no hemos alcanzado el DP.</p>
+      `;
       html = html.replace('{{descN1}}', descN1.toString());
     } else {
       if (procedure.nMotors.firstSegment.clearDP == true) {
-        const descN1 = 'Tardamos en recorrer este primer segmento ' + procedure.nMotors.firstSegment.timeToFinish.toFixed(2) +
-                  ' minutos y recorremos una distancia de ' + procedure.nMotors.firstSegment.distanceToFinish.toFixed(2) +
-                  ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud de ' +
-                  (procedure.nMotors.firstSegment.altitudeInDP + airport?.elevation!).toFixed(2) +
-                  ' ft. Por lo tanto, sobrepasamos las restricciones.';
+        const descN1 = `
+          <p>Tardamos en recorrer este primer segmento:</p>
+          <p style="text-align: center;">
+            t = (${aircraft?.profile.nMotors.heightFirstSegment} ft - 50 ft) / (${procedure.nMotors.firstSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.firstSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h
+          </p>
+          <p>Y recorremos una distancia de:</p>
+          <p style="text-align: center;">
+            d = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.firstSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.firstSegment.distanceToFinish.toFixed(2)} NM
+          </p>
+          <p>En este punto ya hemos alcanzado el DP y hemos tardado en alcanzarlo:</p>
+          <p style="text-align: center;">
+            t = ${(procedure.dpDistance)} NM / (${procedure.nMotors.firstSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.firstSegment.timeToDP.toFixed(5)} min
+          </p>
+          <p>Y hemos alcanzado una altitud de:</p>
+          <p style="text-align: center;">
+            h = ${(procedure.nMotors.firstSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.firstSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.firstSegment.altitudeInDP.toFixed(2)} ft
+          </p>
+          <p>Por lo tanto, sobrepasamos las restricciones.</p>
+        `;
         html = html.replace('{{descN1}}', descN1.toString());
       } else {
-        const descN1 = 'Tardamos en recorrer este primer segmento ' + procedure.nMotors.firstSegment.timeToFinish.toFixed(2) +
-                  ' minutos y recorremos una distancia de ' + procedure.nMotors.firstSegment.distanceToFinish.toFixed(2) +
-                  ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud en el DP de ' +
-                  (procedure.nMotors.firstSegment.altitudeInDP + airport?.elevation!).toFixed(2) +
-                  ' ft. Por lo tanto, no sobrepasamos las restricciones.';
+        const descN1 = `
+          <p>Tardamos en recorrer este primer segmento:</p>
+          <p style="text-align: center;">
+            t = (${aircraft?.profile.nMotors.heightFirstSegment} ft - 50 ft) / (${procedure.nMotors.firstSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.firstSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h
+          </p>
+          <p>Y recorremos una distancia de:</p>
+          <p style="text-align: center;">
+            d = ${(procedure.nMotors.firstSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.firstSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.firstSegment.distanceToFinish.toFixed(2)} NM
+          </p>
+          <p>En este punto ya hemos alcanzado el DP y hemos tardado en alcanzarlo:</p>
+          <p style="text-align: center;">
+            t = ${(procedure.dpDistance)} NM / (${procedure.nMotors.firstSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.firstSegment.timeToDP.toFixed(5)} min
+          </p>
+          <p>Y hemos alcanzado una altitud de:</p>
+          <p style="text-align: center;">
+            h = ${(procedure.nMotors.firstSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.firstSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.firstSegment.altitudeInDP.toFixed(2)} ft
+          </p>
+          <p>Por lo tanto, no sobrepasamos las restricciones.</p>
+        `;
         html = html.replace('{{descN1}}', descN1.toString());
       }
     }
@@ -652,24 +696,68 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
       html = html.replace('{{rateN2}}', rateN2.toFixed(2).toString());
 
       if (!procedure.nMotors.secondSegment.reachDP) {
-        const descN2 = 'Tardamos en recorrer este segundo segmento ' + procedure.nMotors.secondSegment.timeToFinish.toFixed(2) +
-                    ' minutos y recorremos una distancia de ' + procedure.nMotors.secondSegment.distanceToFinish.toFixed(2) +
-                    ' NM. En este punto aún no hemos alcanzado el DP.';
+        const descN2 = `
+          <p>Tardamos en recorrer este segundo segmento:</p>
+          <p style="text-align: center;">
+            t = (${aircraft?.profile.nMotors.heightSecondSegment} ft - ${aircraft?.profile.nMotors.heightFirstSegment} ft) / (${procedure.nMotors.secondSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.secondSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h
+          </p>
+          <p>Y recorremos una distancia de:</p>
+          <p style="text-align: center;">
+            d = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.secondSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.secondSegment.distanceToFinish.toFixed(2)} NM
+          </p>
+          <p>En este punto aún no hemos alcanzado el DP.</p>
+        `;
         html = html.replace('{{descN2}}', descN2.toString());
       } else {
         if (procedure.nMotors.secondSegment.clearDP) {
-          const descN2 = 'Tardamos en recorrer este segundo segmento ' + procedure.nMotors.secondSegment.timeToFinish.toFixed(2) +
-                    ' minutos y recorremos una distancia de ' + procedure.nMotors.secondSegment.distanceToFinish.toFixed(2) +
-                    ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud en el DP de ' +
-                    (procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2) +
-                    ' ft. Por lo tanto, sobrepasamos las restricciones.';
+          const descN2 = `
+            <p>Tardamos en recorrer este segundo segmento:</p>
+            <p style="text-align: center;">
+              t = (${aircraft?.profile.nMotors.heightSecondSegment} ft - ${aircraft?.profile.nMotors.heightFirstSegment} ft) / (${procedure.nMotors.secondSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.secondSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h
+            </p>
+            <p>Y recorremos una distancia de:</p>
+            <p style="text-align: center;">
+              d = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.secondSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.secondSegment.distanceToFinish.toFixed(2)} NM
+            </p>
+            <p>En este punto ya hemos alcanzado el DP y hemos tardado en alcanzarlo:</p>
+            <p style="text-align: center;">
+              t = (${(procedure.dpDistance)} NM - ${(procedure.nMotors.firstSegment.distanceToFinish.toFixed(2))} NM) / (${procedure.nMotors.secondSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.secondSegment.timeToDP.toFixed(5)} min
+            </p>
+            <p>Y hemos subido desde el principio del segmento:</p>
+            <p style="text-align: center;">
+              h = ${(procedure.nMotors.secondSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.secondSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.secondSegment.altitudeInDP.toFixed(2)} ft
+            </p>
+            <p>Por lo tanto hemos alcanzado una altitud de:</p>
+            <p style="text-align: center;">
+              h = ${procedure.nMotors.secondSegment.altitudeInDP.toFixed(2)} ft + ${aircraft?.profile.nMotors.heightFirstSegment.toFixed(2)} ft + ${airport?.elevation.toFixed(2)} ft = ${(procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2)} ft
+            </p>
+            <p>Por lo tanto, sobrepasamos las restricciones.</p>
+          `;
           html = html.replace('{{descN2}}', descN2.toString());
         } else {
-          const descN2 = 'Tardamos en recorrer este segundo segmento ' + procedure.nMotors.secondSegment.timeToFinish.toFixed(2) +
-                    ' minutos y recorremos una distancia de ' + procedure.nMotors.secondSegment.distanceToFinish.toFixed(2) +
-                    ' NM. En este punto ya hemos alcanzado el DP y hemos alcanzado un altitud de ' +
-                    (procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2) +
-                    ' ft. Por lo tanto, no sobrepasamos las restricciones.';
+          const descN2 = `
+            <p>Tardamos en recorrer este segundo segmento:</p>
+            <p style="text-align: center;">
+              t = (${aircraft?.profile.nMotors.heightSecondSegment} ft - ${aircraft?.profile.nMotors.heightFirstSegment} ft) / (${procedure.nMotors.secondSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.secondSegment.timeToFinish.toFixed(5)} min = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h
+            </p>
+            <p>Y recorremos una distancia de:</p>
+            <p style="text-align: center;">
+              d = ${(procedure.nMotors.secondSegment.timeToFinish / 60).toFixed(5)} h * ${procedure.nMotors.secondSegment.velocityTAS.toFixed(2)} NM/h = ${procedure.nMotors.secondSegment.distanceToFinish.toFixed(2)} NM
+            </p>
+            <p>En este punto ya hemos alcanzado el DP y hemos tardado en alcanzarlo:</p>
+            <p style="text-align: center;">
+              t = (${(procedure.dpDistance)} NM - ${(procedure.nMotors.firstSegment.distanceToFinish.toFixed(2))} NM) / (${procedure.nMotors.secondSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.secondSegment.timeToDP.toFixed(5)} min
+            </p>
+            <p>Y hemos subido desde el principio del segmento:</p>
+            <p style="text-align: center;">
+              h = ${(procedure.nMotors.secondSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.secondSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.secondSegment.altitudeInDP.toFixed(2)} ft
+            </p>
+            <p>Por lo tanto hemos alcanzado una altitud de:</p>
+            <p style="text-align: center;">
+              h = ${procedure.nMotors.secondSegment.altitudeInDP.toFixed(2)} ft + ${aircraft?.profile.nMotors.heightFirstSegment.toFixed(2)} ft + ${airport?.elevation.toFixed(2)} ft = ${(procedure.nMotors.secondSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightFirstSegment!).toFixed(2)} ft
+            </p>
+            <p>Por lo tanto, no sobrepasamos las restricciones.</p>
+          `;
           html = html.replace('{{descN2}}', descN2.toString());
         }
       }
@@ -697,16 +785,38 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
       html = html.replace('{{rateN3}}', rateN3.toFixed(2).toString());
 
       if (procedure.nMotors.thirdSegment.clearDP) {
-        const descN3 = 'Tardamos en alcanzar el DP ' + procedure.nMotors.thirdSegment.timeToDP.toFixed(2) +
-                  ' minutos. En este punto hemos alcanzado un altitud en el DP de ' +
-                  (procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2) +
-                  ' ft. Por lo tanto, sobrepasamos las restricciones.';
+        const descN3 = `
+            <p>Tardamos en alcanzar el DP:</p>
+            <p style="text-align: center;">
+              t = (${(procedure.dpDistance)} NM - ${(procedure.nMotors.firstSegment.distanceToFinish.toFixed(2))} NM) - ${(procedure.nMotors.secondSegment.distanceToFinish.toFixed(2))} NM) / (${procedure.nMotors.thirdSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.thirdSegment.timeToDP.toFixed(5)} min
+            </p>
+            <p>Y hemos subido desde el principio del segmento:</p>
+            <p style="text-align: center;">
+              h = ${(procedure.nMotors.thirdSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.thirdSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.thirdSegment.altitudeInDP.toFixed(2)} ft
+            </p>
+            <p>Por lo tanto hemos alcanzado una altitud de:</p>
+            <p style="text-align: center;">
+              h = ${procedure.nMotors.thirdSegment.altitudeInDP.toFixed(2)} ft + ${aircraft?.profile.nMotors.heightSecondSegment.toFixed(2)} ft + ${airport?.elevation.toFixed(2)} ft = ${(procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2)} ft
+            </p>
+            <p>Por lo tanto, sobrepasamos las restricciones.</p>
+          `;
         html = html.replace('{{descN3}}', descN3.toString());
       } else {
-        const descN3 = 'Tardamos en alcanzar el DP ' + procedure.nMotors.thirdSegment.timeToDP.toFixed(2) +
-                  ' minutos. En este punto hemos alcanzado un altitud en el DP de ' +
-                  (procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2) +
-                  ' ft. Por lo tanto, no sobrepasamos las restricciones.';
+        const descN3 = `
+            <p>Tardamos en alcanzar el DP:</p>
+            <p style="text-align: center;">
+              t = (${(procedure.dpDistance)} NM - ${(procedure.nMotors.firstSegment.distanceToFinish.toFixed(2))} NM) - ${(procedure.nMotors.secondSegment.distanceToFinish.toFixed(2))} NM) / (${procedure.nMotors.thirdSegment.velocityTAS.toFixed(2)} NM/h) * 60 min/h = ${procedure.nMotors.thirdSegment.timeToDP.toFixed(5)} min
+            </p>
+            <p>Y hemos subido desde el principio del segmento:</p>
+            <p style="text-align: center;">
+              h = ${(procedure.nMotors.thirdSegment.timeToDP.toFixed(5))} min * (${procedure.nMotors.thirdSegment.rateClimb.toFixed(2)} ft/min) = ${procedure.nMotors.thirdSegment.altitudeInDP.toFixed(2)} ft
+            </p>
+            <p>Por lo tanto hemos alcanzado una altitud de:</p>
+            <p style="text-align: center;">
+              h = ${procedure.nMotors.thirdSegment.altitudeInDP.toFixed(2)} ft + ${aircraft?.profile.nMotors.heightSecondSegment.toFixed(2)} ft + ${airport?.elevation.toFixed(2)} ft = ${(procedure.nMotors.thirdSegment.altitudeInDP + airport?.elevation! + aircraft?.profile.nMotors.heightSecondSegment!).toFixed(2)} ft
+            </p>
+            <p>Por lo tanto, no sobrepasamos las restricciones.</p>
+          `;
         html = html.replace('{{descN3}}', descN3.toString());
       }
     } else {
