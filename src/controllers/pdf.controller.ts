@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import path from 'path';
-import { generatePdf, generatePdfList } from "../services/pdf.service";
+import { generatePdfList } from "../services/pdf.service";
 import { Procedure } from "../interfaces/procedure.interface";
 import { obtainProcedure } from "../services/procedure.service";
 import cloudinary from 'cloudinary';
@@ -24,7 +24,7 @@ const generatePdfCtrl = async (req: Request, res: Response) => {
             const outputPath = path.resolve(__dirname, '../outputs', `output_${Date.now()}.pdf`);
 
             try {
-                await generatePdf(procedure, templatePath, outputPath);
+                await generatePdfList([procedure], templatePath, outputPath);
                 cloudinary.v2.uploader.upload(outputPath, { resource_type: 'raw' }, (error, result) => {
                     if (error) {
                         return res.status(500).send('Error uploading PDF to Cloudinary: ' + error);

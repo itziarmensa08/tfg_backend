@@ -21,10 +21,10 @@ const NMotors = new Schema({
 });
 
 const Failure = new Schema({
-    initialElevation: { type: Number, required: true },
-    distanceToInitial: { type: Number, required: true },
+    initialElevation: { type: Number },
+    distanceToInitial: { type: Number },
     altitude: {
-        state: { type: Boolean, required: true },
+        state: { type: Boolean },
         dpDistance: { type: Number },
         dpElevation: { type: Number },
         firstSegment: { type: Segment },
@@ -32,7 +32,7 @@ const Failure = new Schema({
         thirdSegment: { type: Segment }
     },
     gradient: {
-        state: { type: Boolean, required: true },
+        state: { type: Boolean },
         dpDistance: { type: Number },
         gradientValue: { type: Number },
         finalGradient: { type: Number },

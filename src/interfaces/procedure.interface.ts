@@ -22,7 +22,7 @@ export interface Segment {
     velocityIAS: Number,
     density: Number,
     velocityTAS: Number,
-    rateClimb: Number,
+    rateClimb: number,
     timeToFinish: number,
     distanceToFinish: Number,
     altitudeInDP: number,
