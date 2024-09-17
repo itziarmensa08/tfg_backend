@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libxdamage1 \
     libxrandr2 \
     libgbm1 \
+    libgbm-dev \
     libpango-1.0-0 \
     libasound2 \
     libpangocairo-1.0-0 \
