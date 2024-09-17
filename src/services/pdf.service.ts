@@ -891,6 +891,8 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   const page = await browser.newPage();
+  await page.setDefaultNavigationTimeout(60000);
+  await page.setDefaultTimeout(60000);
 
   await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
 
