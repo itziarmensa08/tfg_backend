@@ -888,7 +888,6 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   }
 
   const browser = await puppeteer.launch({
-    executablePath: '/usr/bin/google-chrome',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
     timeout: 60000,
