@@ -891,12 +891,13 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
     timeout: 60000,
+    protocolTimeout: 120000,
   });
 
   const page = await browser.newPage();
 
-  await page.setDefaultNavigationTimeout(60000);
-  await page.setDefaultTimeout(60000);
+  await page.setDefaultNavigationTimeout(120000);
+  await page.setDefaultTimeout(120000);
 
 
   await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
