@@ -906,6 +906,10 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   console.log('LAUNCHED BROWSER: ')
 
   console.log(browser)
+  console.log(browser.isConnected())
+
+  const pages = await browser.pages();
+  console.log(pages)
 
   const page = await browser.newPage();
 
