@@ -890,7 +890,7 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   console.log('CREATED HTML')
 
   const browser = await puppeteer.launch({
-    headless: true,
+    executablePath: '/usr/bin/google-chrome',
   });
 
   console.log('LAUNCHED BROWSER: ')
