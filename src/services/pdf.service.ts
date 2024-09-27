@@ -890,10 +890,7 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   console.log('CREATED HTML')
 
   const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
-    timeout: 60000,
-    protocolTimeout: 120000,
   });
 
   console.log('LAUNCHED BROWSER: ')
@@ -905,10 +902,6 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   console.log('NEW PAGE')
 
   console.log(page)
-
-  await page.setDefaultNavigationTimeout(120000);
-  await page.setDefaultTimeout(120000);
-
 
   await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
 
