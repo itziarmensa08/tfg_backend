@@ -887,6 +887,8 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     combinedHtml += `<div style="page-break-after: always;">${html}</div>`;
   }
 
+  console.log('CREATED HTML')
+
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
@@ -894,7 +896,15 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     protocolTimeout: 120000,
   });
 
+  console.log('LAUNCHED BROWSER: ')
+
+  console.log(browser)
+
   const page = await browser.newPage();
+
+  console.log('NEW PAGE')
+
+  console.log(page)
 
   await page.setDefaultNavigationTimeout(120000);
   await page.setDefaultTimeout(120000);
