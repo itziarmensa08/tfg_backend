@@ -68,6 +68,11 @@ const generateCombinedPdfCtrl = async (req: Request, res: Response) => {
             return res.status(404).send('No valid procedures found.');
         }
 
+        const outputDirectory = path.resolve(__dirname, '../outputs');
+        if (!fs.existsSync(outputDirectory)) {
+            fs.mkdirSync(outputDirectory, { recursive: true });
+        }
+
         const templatePath = path.resolve(__dirname, '../templates/operations/Procedure.html');
         const outputPath = path.resolve(__dirname, '../outputs', `output_combined_${Date.now()}.pdf`);
 

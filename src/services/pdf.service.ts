@@ -910,15 +910,11 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   try {
     console.log(browser);
     console.log(browser.isConnected());
-  
     const pages = await browser.pages();
     console.log('Existing pages:', pages);
-  
-    // Crear una nueva página con manejo de errores
     page = await browser.newPage();
     console.log('NEW PAGE');
     console.log(page);
-  
   } catch (error) {
     console.error('Error creating new page:', error);
   }
