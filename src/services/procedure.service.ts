@@ -19,10 +19,20 @@ const addProcedure = async (procedure: Procedure) => {
     return response;
 }
 
-const putProcedure = async (id: string, procedure: Procedure) => {
-    const response = await ProcedureModel.findOneAndUpdate({_id: id}, procedure, {new: true});
+const putProcedure = async (id: string, procedure: Partial<Procedure>) => {
+    const response = await ProcedureModel.findOneAndUpdate(
+        { _id: id },
+        {
+            $set: {
+                sidName: procedure.sidName,
+                rwyName: procedure.rwyName,
+                dpName: procedure.dpName,
+            },
+        },
+        { new: true }
+    );
     return response;
-}
+};
 
 const removeProcedure = async (id: string) => {
     const response = await ProcedureModel.findByIdAndDelete({_id: id});

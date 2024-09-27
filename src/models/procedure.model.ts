@@ -2,6 +2,7 @@ import {Schema, model} from "mongoose";
 import { Procedure } from "../interfaces/procedure.interface";
 
 const Segment = new Schema({
+    temperature: { type: Number },
     velocityIAS: { type: Number },
     density: { type: Number },
     velocityTAS: { type: Number },
@@ -89,11 +90,9 @@ const ProcedureSchema = new Schema<Procedure> (
         },
         procedureN: {
             type: String,
-            required: true,
         },
         procedureN1: {
             type: String,
-            required: true,
         },
         nMotors: NMotors,
         failure: Failure
