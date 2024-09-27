@@ -43,6 +43,7 @@ const generatePdfCtrl = async (req: Request, res: Response) => {
             res.status(404).send('Procedure not found');
         }
     } catch (e) {
+        console.log(e)
         res.status(500).json(`Error getUser: ${e}`)
     }
 }
@@ -90,6 +91,7 @@ const generateCombinedPdfCtrl = async (req: Request, res: Response) => {
                 res.status(200).json({ url: result?.secure_url });
             });
         } catch (error) {
+            console.log(error)
             res.status(500).send('Error generating combined PDF: ' + error);
         }
     } catch (e) {
