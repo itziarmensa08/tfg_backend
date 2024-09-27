@@ -1,6 +1,6 @@
 {
   "name": "tfg-backend",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "mongoose": "^8.0.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
-    "puppeteer": "^23.0.2"
+    "puppeteer": "^23.4.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
