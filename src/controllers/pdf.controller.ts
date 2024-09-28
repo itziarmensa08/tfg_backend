@@ -37,13 +37,13 @@ const generatePdfCtrl = async (req: Request, res: Response) => {
                     res.status(200).json({ url: result?.secure_url });
                 });
             } catch (error) {
+                console.log(error)
                 res.status(500).send('Error generating PDF ' + error);
             }
         } else {
             res.status(404).send('Procedure not found');
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json(`Error getUser: ${e}`)
     }
 }
