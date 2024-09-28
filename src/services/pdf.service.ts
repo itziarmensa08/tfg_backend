@@ -892,49 +892,43 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
     args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',  // Usar menos memoria compartida
-      '--disable-gpu',  // Deshabilitar GPU, ya que no es necesaria para un entorno sin interfaz gráfica
-      '--disable-software-rasterizer',
-      '--no-zygote',
-      '--single-process',
+      '--no-sandbox'
     ],
-    headless: true,
+    headless: false,
   });
 
   console.log('LAUNCHED BROWSER: ')
 
-  let page: any;
-
   try {
     console.log(browser);
     console.log(browser.isConnected());
+
     const pages = await browser.pages();
     console.log('Existing pages:', pages);
-    page = await browser.newPage();
+
+    // Crear una nueva página con manejo de errores
+    const page = await browser.newPage();
     console.log('NEW PAGE');
     console.log(page);
+
+    await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
+    await page.pdf({
+      path: outputPath,
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '10mm',
+        right: '10mm',
+        bottom: '10mm',
+        left: '10mm'
+      }
+    });
+    await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 2 });
   } catch (error) {
     console.error('Error creating new page:', error);
   }
 
 
-  await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
-
-  await page.pdf({
-    path: outputPath,
-    format: 'A4',
-    printBackground: true,
-    margin: {
-      top: '10mm',
-      right: '10mm',
-      bottom: '10mm',
-      left: '10mm'
-    }
-  });
-
-  await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 2 });
 
   await browser.close();
 
