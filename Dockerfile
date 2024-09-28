@@ -1,5 +1,7 @@
 FROM node:21.7.1
 
+ENV DEBUG=puppeteer:*
+
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 

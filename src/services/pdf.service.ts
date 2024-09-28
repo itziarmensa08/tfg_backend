@@ -892,15 +892,25 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
     args: ['--no-sandbox'],
+    timeout: 60000,
   });
 
   console.log('LAUNCHED BROWSER: ')
+
+  const timeout = (ms: number | undefined) => {
+    return new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(`Timeout after ${ms} ms`)), ms);
+    });
+  };
 
   try {
     console.log(browser);
     console.log(browser.isConnected());
 
-    const pages = await browser.pages();
+    const pages = await Promise.race([
+      browser.pages(),
+      timeout(10000)
+    ]);
     console.log('Existing pages:', pages);
 
     // Crear una nueva página con manejo de errores
