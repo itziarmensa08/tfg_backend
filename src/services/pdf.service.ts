@@ -909,7 +909,7 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
     const pages = await Promise.race([
       browser.pages(),
-      timeout(10000)
+      timeout(20000)
     ]);
     console.log('Existing pages:', pages);
 
