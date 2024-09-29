@@ -6,6 +6,7 @@ import { Aircraft } from '../interfaces/aircraft.interface';
 import { obtainAircraft } from './aircraft.service';
 import { Airport } from '../interfaces/airport.interface';
 import { obtainAirport } from './airport.service';
+import pdf from 'html-pdf';
 
 const generatePdfList = async (procedures: Procedure[], templatePath: string, outputPath: string) => {
   let combinedHtml = '';
@@ -889,7 +890,7 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
   console.log('CREATED HTML')
 
-  const browser = await puppeteer.launch({
+  /*const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
     args: [
       '--no-sandbox',
@@ -947,8 +948,38 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
 
 
-  await browser.close();
+  await browser.close();*/
+
+  const options = {
+    format: 'A4',
+    margin: {
+      top: '10mm',
+      right: '10mm',
+      bottom: '10mm',
+      left: '10mm',
+    }
+  };
+
+  try {
+    const pdfBuffer = await generatePdfPromise(combinedHtml, options); // Usamos la función de promesas
+    fs.writeFileSync(outputPath, pdfBuffer);
+    console.log('PDF generated successfully:', outputPath);
+  } catch (err) {
+    console.error('Error generating PDF:', err);
+    throw new Error('Error generating PDF');
+  }
 
 }
+
+const generatePdfPromise = (htmlContent: string, options: any): Promise<Buffer> => {
+  return new Promise((resolve, reject) => {
+    pdf.create(htmlContent, options).toBuffer((err, buffer) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(buffer);
+    });
+  });
+};
 
 export { generatePdfList };
