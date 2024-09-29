@@ -891,7 +891,16 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
   const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
-    args: ['--no-sandbox', '--disable-dev-shm-usage'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage', // Evitar problemas de memoria compartida en Docker
+      '--disable-gpu',            // Deshabilitar el uso de GPU, ya que no es necesario en headless
+      '--disable-software-rasterizer', // Evitar el uso del rasterizador por software
+      '--no-zygote',              // Reduce el uso de recursos al no crear procesos zygote
+      '--single-process',         // Fuerza a Chrome a correr en un solo proceso
+      '--disable-features=IsolateOrigins,site-per-process'
+    ],
     headless: true,
     timeout: 120000,
   });
