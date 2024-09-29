@@ -10,7 +10,8 @@ import pdf from 'html-pdf';
 
 const generatePdfList = async (procedures: Procedure[], templatePath: string, outputPath: string) => {
   let combinedHtml = '';
-  for (const procedure of procedures) {
+  for (let i = 0; i < procedures.length; i++) {
+    const procedure = procedures[i];
     let html = fs.readFileSync(templatePath, 'utf-8');
 
     const aircraft: Aircraft | null = await obtainAircraft(procedure.aircraft.toString())
@@ -885,70 +886,17 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
 
     html = html.replace('{{conclusionN1}}', formattedConclusionN1.toString());
 
-    combinedHtml += `<div style="page-break-after: always;">${html}</div>`;
+    if (i < procedures.length - 1) {
+      combinedHtml += `
+      ${html}
+      <div style="page-break-after: always; margin-bottom: 10mm;"></div>
+      <div style="margin-top: 10mm;"></div>`;
+    } else {
+      combinedHtml += html;
+    }
   }
 
   console.log('CREATED HTML')
-
-  /*const browser = await puppeteer.launch({
-    executablePath: '/usr/bin/google-chrome',
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage', // Evitar problemas de memoria compartida en Docker
-      '--disable-gpu',            // Deshabilitar el uso de GPU, ya que no es necesario en headless
-      '--disable-software-rasterizer', // Evitar el uso del rasterizador por software
-      '--no-zygote',              // Reduce el uso de recursos al no crear procesos zygote
-      '--single-process',         // Fuerza a Chrome a correr en un solo proceso
-      '--disable-features=IsolateOrigins,site-per-process'
-    ],
-    headless: true,
-    timeout: 120000,
-  });
-
-  console.log('LAUNCHED BROWSER: ')
-
-  const timeout = (ms: number | undefined) => {
-    return new Promise((_, reject) => {
-      setTimeout(() => reject(new Error(`Timeout after ${ms} ms`)), ms);
-    });
-  };
-
-  try {
-    console.log(browser);
-    console.log(browser.isConnected());
-
-    const pages = await Promise.race([
-      browser.pages(),
-      timeout(20000)
-    ]);
-    console.log('Existing pages:', pages);
-
-    // Crear una nueva página con manejo de errores
-    const page = await browser.newPage();
-    console.log('NEW PAGE');
-    console.log(page);
-
-    await page.setContent(combinedHtml, { waitUntil: 'networkidle0' });
-    await page.pdf({
-      path: outputPath,
-      format: 'A4',
-      printBackground: true,
-      margin: {
-        top: '10mm',
-        right: '10mm',
-        bottom: '10mm',
-        left: '10mm'
-      }
-    });
-    await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 2 });
-  } catch (error) {
-    console.error('Error creating new page:', error);
-  }
-
-
-
-  await browser.close();*/
 
   const options = {
     format: 'A4',
@@ -961,7 +909,7 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
   };
 
   try {
-    const pdfBuffer = await generatePdfPromise(combinedHtml, options); // Usamos la función de promesas
+    const pdfBuffer = await generatePdfPromise(combinedHtml, options);
     fs.writeFileSync(outputPath, pdfBuffer);
     console.log('PDF generated successfully:', outputPath);
   } catch (err) {

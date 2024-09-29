@@ -8,51 +8,53 @@
         body {
             font-family: Arial, sans-serif;
             color: #000080;
+            padding: 20px;
         }
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 20px;
+            text-align: center;
         }
         .header img {
-            width: 120px;
+            width: 90px;
+            margin-bottom: 20px;
         }
         .header-text {
             text-align: center;
         }
         .header-text h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 20px;
             color: #000080;
         }
         .header-text h2 {
-            margin: 0;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 10px;
             color: #000080;
         }
         .header-right {
-            text-align: right;
-            font-size: 16px;
+            text-align: center;
+            font-size: 10px;
             color: #000080;
         }
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr); /* Ensure the columns divide the total width equally */
-            gap: 5px;
-            width: 180mm; /* Set the total width of the grid container */
-            justify-content: start; /* Ensure the grid starts from the left */
-            margin: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
         }
         .grid-item {
+            display: inline;
             text-align: center;
             padding: 10px;
             font-size: 18px;
             font-weight: bold;
             border: 1px solid #000080;
+            width: 10px;
+            margin: 0;
         }
         .section-title {
-            font-size: 14px;
+            font-size: 12px;
             margin-bottom: 10px;
             color: #000;
             font-weight: bold;
@@ -67,6 +69,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
         }
         .conclusion-box {
             padding: 10px;
@@ -78,6 +81,10 @@
             text-align: center;
             color: #000080;
         }
+        .page-break {
+            page-break-before: always;
+            margin-bottom: 10mm;
+        }
     </style>
 </head>
 <body>
@@ -87,18 +94,17 @@
         <div class="header-text">
             <h1>Ficha para Análisis de Aeropuerto</h1>
             <h2>Sheet for Airport Analysis</h2>
-        </div>
-        <div class="header-right">
-            FLOTA {{metro}}<br>Fleet
+            <div class="header-right">
+                FLOTA {{metro}}<br>Fleet
+            </div>
         </div>
     </div>
 
     <div class="grid-container">
         <div class="grid-item">{{airport1}}</div>
         <div class="grid-item">{{airport2}}</div>
-        <div class="grid-item">{{airport3}}</div>
-        <div style="width: 12px;"></div>
-        <div class="grid-item">{{airport4}}</div>
+        <div class="grid-item" style="margin-right: 20px;">{{airport3}}</div>
+        <div class="grid-item" style="margin-left: 20px;">{{airport4}}</div>
         <div class="grid-item">{{airport5}}</div>
         <div class="grid-item">{{airport6}}</div>
         <div class="grid-item">{{airport7}}</div>
@@ -126,6 +132,8 @@
         <p>{{descN1}}</p>
     </div>
     {{/if firstSegmentN}}
+
+    <div class="page-break"></div>
 
     {{#if secondSegmentN}}
     <div class="content-box">
@@ -156,6 +164,7 @@
     </div>
 
     {{#if gradientRestriction}}
+    <div class="page-break"></div>
     <div style="height: 30px;"></div>
     <div class="section-title">ASCENSO N - 1 MOTORES</div>
     <div class="conclusion-box">
@@ -177,6 +186,7 @@
     <div class="conclusion-box">
         <p>{{descGradient1}}</p>
     </div>
+    <div class="page-break"></div>
     {{/if firstSegmentGradientRestriction}}
     {{#if secondSegmentGradientRestriction}}
     <div class="content-box">
@@ -204,6 +214,7 @@
     {{/if gradientRestriction}}
 
     {{#if altitudeRestriction}}
+    <div class="page-break"></div>
     <div style="height: 30px;"></div>
     <div class="section-title">ASCENSO N - 1 MOTORES</div>
     <div class="conclusion-box">
@@ -225,6 +236,7 @@
     <div class="conclusion-box">
         <p>{{descAltitude1}}</p>
     </div>
+    <div class="page-break"></div>
     {{/if firstSegmentAltitudeRestriction}}
     {{#if secondSegmentAltitudeRestriction}}
     <div class="content-box">

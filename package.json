@@ -18,6 +18,8 @@
     "html-pdf": "^3.0.1",
     "html-pdf-node": "^1.0.8",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.3",
     "mongoose": "^8.0.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
