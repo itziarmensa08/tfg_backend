@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Crew Procedure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #000080;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header img {
+            width: 90px;
+            margin-bottom: 20px;
+        }
+        .header-text {
+            text-align: center;
+        }
+        .header-text h1 {
+            margin: 0;
+            font-size: 20px;
+            color: #000080;
+        }
+        .header-text h2 {
+            margin-bottom: 20px;
+            font-size: 10px;
+            color: #000080;
+        }
+        .header-right {
+            text-align: center;
+            font-size: 10px;
+            color: #000080;
+        }
+        .grid-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .grid-item {
+            display: inline;
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 1px solid #000080;
+            width: 10px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://res.cloudinary.com/duvdq4fkz/image/upload/v1724777263/eiiyk0ja0leywsui5pj0.png" alt="Flightline Logo">
+        <div class="header-text">
+            <h1>Ficha para Análisis de Aeropuerto</h1>
+            <h2>Sheet for Airport Analysis</h2>
+            <div class="header-right">
+                FLOTA {{metro}}<br>Fleet
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item">{{airport1}}</div>
+        <div class="grid-item">{{airport2}}</div>
+        <div class="grid-item" style="margin-right: 20px;">{{airport3}}</div>
+        <div class="grid-item" style="margin-left: 20px;">{{airport4}}</div>
+        <div class="grid-item">{{airport5}}</div>
+        <div class="grid-item">{{airport6}}</div>
+        <div class="grid-item">{{airport7}}</div>
+    </div>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ import { obtainAircraft } from './aircraft.service';
 import { Airport } from '../interfaces/airport.interface';
 import { obtainAirport } from './airport.service';
 import pdf from 'html-pdf';
+import { CrewProcedure } from '../interfaces/crewProcedure.interface';
 
 const generatePdfList = async (procedures: Procedure[], templatePath: string, outputPath: string) => {
   let combinedHtml = '';
@@ -896,8 +897,6 @@ const generatePdfList = async (procedures: Procedure[], templatePath: string, ou
     }
   }
 
-  console.log('CREATED HTML')
-
   const options = {
     format: 'A4',
     margin: {
@@ -930,4 +929,98 @@ const generatePdfPromise = (htmlContent: string, options: any): Promise<Buffer> 
   });
 };
 
-export { generatePdfList };
+const generateCrewProcedurePdf = async (crewProcedure: CrewProcedure, outputPath: string) => {
+
+  const templatePathHeader = path.resolve(__dirname, '../templates/operations/CrewProcedureHeader.html');
+  const templatePathRwy = path.resolve(__dirname, '../templates/operations/CrewProcedureRwy.html');
+  const templatePathProc = path.resolve(__dirname, '../templates/operations/CrewProcedure.html');
+  const templatePathFooter = path.resolve(__dirname, '../templates/operations/CrewProcedureFooter.html');
+
+  let htmlHeader = fs.readFileSync(templatePathHeader, 'utf-8');
+
+  const aircraft: Aircraft | null = await obtainAircraft(crewProcedure.aircraft.toString())
+
+  const metro = aircraft?.metro?.toString() || '';
+
+  htmlHeader = htmlHeader.replace('{{metro}}', metro);
+
+  const airport: Airport | null = await obtainAirport(crewProcedure.airport.toString())
+
+  const iataCode = airport?.iataCode ?? '';
+  const oaciCode = airport?.oaciCode ?? '';
+
+  htmlHeader = htmlHeader.replace('{{airport1}}', iataCode[0] || '');
+  htmlHeader = htmlHeader.replace('{{airport2}}', iataCode[1] || '');
+  htmlHeader = htmlHeader.replace('{{airport3}}', iataCode[2] || '');
+  htmlHeader = htmlHeader.replace('{{airport4}}', oaciCode[0] || '');
+  htmlHeader = htmlHeader.replace('{{airport5}}', oaciCode[1] || '');
+  htmlHeader = htmlHeader.replace('{{airport6}}', oaciCode[2] || '');
+  htmlHeader = htmlHeader.replace('{{airport7}}', oaciCode[3] || '');
+
+  let htmlBody = '';
+
+  for (let i = 0; i < crewProcedure.proceduresRWY.length; i++) {
+    const procedureRWY = crewProcedure.proceduresRWY[i];
+    let htmlRwy = fs.readFileSync(templatePathRwy, 'utf-8');
+    htmlRwy = htmlRwy.replace('{{rwy}}', procedureRWY.rwy || '');
+    htmlRwy = htmlRwy.replace('{{temp}}', airport?.referenceTemperature?.toString() || '');
+    htmlBody += `
+    ${htmlRwy}
+    <div style="margin-top: 10mm;"></div>`;
+
+    for (let proc of procedureRWY.procedures) {
+      let htmlProc = fs.readFileSync(templatePathProc, 'utf-8');
+      htmlProc = htmlProc.replace('{{sids}}', proc.sids || '');
+      const formattedProc = proc.procedure.replace(/\n/g, '<br>');
+      htmlProc = htmlProc.replace('{{proc}}', formattedProc || '');
+
+      if (i < crewProcedure.proceduresRWY.length - 1) {
+        htmlBody += `
+        ${htmlProc}
+        <div style="page-break-after: always; margin-bottom: 10mm;"></div>
+        <div style="margin-top: 10mm;"></div>`;
+      } else {
+        htmlBody += `
+        ${htmlProc}
+        <div style="margin-top: 10mm;"></div>`;
+      }
+    }
+
+    if (i == crewProcedure.proceduresRWY.length - 1) {
+      let htmlFooter = fs.readFileSync(templatePathFooter, 'utf-8');
+      htmlBody += `
+      <div style="page-break-after: always; margin-bottom: 10mm;"></div>
+      <div style="margin-top: 30mm;"></div>
+      ${htmlFooter}`;
+    }
+  }
+
+  const options = {
+    format: 'A4',
+    margin: {
+      top: '10mm',
+      right: '10mm',
+      bottom: '10mm',
+      left: '10mm',
+    }
+  };
+
+  let combinedHtml = '';
+
+  combinedHtml += `
+      ${htmlHeader}
+      <div style="margin-top: 10mm;"></div>
+      ${htmlBody}`;
+
+  try {
+    const pdfBuffer = await generatePdfPromise(combinedHtml, options);
+    fs.writeFileSync(outputPath, pdfBuffer);
+    console.log('PDF generated successfully:', outputPath);
+  } catch (err) {
+    console.error('Error generating PDF:', err);
+    throw new Error('Error generating PDF');
+  }
+
+}
+
+export { generatePdfList, generateCrewProcedurePdf };

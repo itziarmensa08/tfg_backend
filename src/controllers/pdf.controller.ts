@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import path from 'path';
-import { generatePdfList } from "../services/pdf.service";
+import { generateCrewProcedurePdf, generatePdfList } from "../services/pdf.service";
 import { Procedure } from "../interfaces/procedure.interface";
 import { obtainProcedure } from "../services/procedure.service";
 import cloudinary from 'cloudinary';
 import fs from 'fs';
+import { CrewProcedure } from "../interfaces/crewProcedure.interface";
+import { obtainCrewProcedure } from "../services/crewProcedure.service";
 
 cloudinary.v2.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -99,4 +101,44 @@ const generateCombinedPdfCtrl = async (req: Request, res: Response) => {
     }
 };
 
-export { generatePdfCtrl, generateCombinedPdfCtrl }
+const generateCrewProcedureCtrl = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const data: any = await obtainCrewProcedure(id);
+        let crewProcedure: CrewProcedure;
+        if (data) {
+            crewProcedure = data;
+            const outputDirectory = path.resolve(__dirname, '../outputs');
+            if (!fs.existsSync(outputDirectory)) {
+                fs.mkdirSync(outputDirectory, { recursive: true });
+            }
+
+            const outputPath = path.resolve(__dirname, '../outputs', `output_combined_${Date.now()}.pdf`);
+
+            try {
+                await generateCrewProcedurePdf(crewProcedure, outputPath);
+                cloudinary.v2.uploader.upload(outputPath, { resource_type: 'raw' }, (error, result) => {
+                    if (error) {
+                        return res.status(500).send('Error uploading PDF to Cloudinary: ' + error);
+                    }
+                    fs.unlink(outputPath, (unlinkError) => {
+                        if (unlinkError) {
+                            console.error('Error deleting local PDF file: ', unlinkError);
+                        }
+                    });
+                    res.status(200).json({ url: result?.secure_url });
+                });
+            } catch (error) {
+                console.log(error)
+                res.status(500).send('Error generating combined PDF: ' + error);
+            }
+        } else {
+            res.status(404).send('Crew Procedure Not Found');
+        }
+
+    } catch (e) {
+        res.status(500).json(`Error generateCombinedPdfCtrl: ${e}`);
+    }
+};
+
+export { generatePdfCtrl, generateCombinedPdfCtrl, generateCrewProcedureCtrl }

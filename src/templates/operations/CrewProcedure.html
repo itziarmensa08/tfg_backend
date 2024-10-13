@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SID and Procedure Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container-proc {
+            border: 2px solid #6C3483;
+            border-bottom: 6px solid #6C3483;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .sids, .procedure, .restrictions, .eng-fail {
+            margin: 10px 0;
+        }
+        .sids, .procedure {
+            font-weight: bold;
+            color: black;
+        }
+        .highlight {
+            font-weight: normal;
+        }
+        .procedure-section {
+            border-top: 4px solid #6C3483;
+            background-color: #e7e1ea;
+            padding: 15px;
+        }
+        .procedure-detail {
+            font-weight: normal;
+            font-size: 13px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-proc">
+        <div class="sids">SIDs: <span class="highlight">{{sids}}</span></div>
+
+        <div class="procedure-section">
+            <div class="procedure">PROCEDURE:</div>
+            <div class="procedure-detail">{{proc}}</div>
+        </div>
+    </div>
+
+</body>
+</html>
