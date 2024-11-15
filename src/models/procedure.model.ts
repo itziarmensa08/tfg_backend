@@ -78,7 +78,6 @@ const ProcedureSchema = new Schema<Procedure> (
         },
         dpDistance: {
             type: Number,
-            required: true,
         },
         dpAltitude: {
             type: Number,
