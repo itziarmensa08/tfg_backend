@@ -29,6 +29,12 @@ jobs:
       run: |
         set DOCKER_BUILDKIT=0
         docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.event.head_commit.message }} .
+        docker images
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.event.head_commit.message }}
 
+    - name: Tag and Push Latest
+      run: |
+        set DOCKER_BUILDKIT=0
+        docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/backend:${{ github.event.head_commit.message }} ${{ secrets.DOCKER_HUB_USERNAME }}/backend:latest
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backend:latest
 
