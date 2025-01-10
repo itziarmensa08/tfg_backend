@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginUser, registerUser, validateUser } from "../services/auth.service";
+import { forgotPassword, loginUser, registerUser, resendValidation, restorePassword, validateUser } from "../services/auth.service";
 import fs from 'fs';
 import path from 'path';
 import { transporter } from "../config/mail";
@@ -25,9 +25,9 @@ const registerCtrl = async ({body}: Request, res: Response) => {
                 if (fs.existsSync(filePath)) {
                     var template = fs.readFileSync(filePath, 'utf-8');
                     template = template.replace('{name}', body.name);
-                    template = template.replace('{url}', `${process.env.FRONTEND_URL}#/login/${id}`);
+                    template = template.replace('{url}', `${process.env.FRONTEND_URL}/confirm?id=${id}`);
                     const mailOptions = {
-                        from: 'h24@flightlinebcn.com',
+                        from: 'eosidcalculator@gmail.com',
                         to: body.email,
                         subject: 'Confirmar email',
                         html: template,
@@ -93,4 +93,51 @@ const validateCtrl = async (req: Request, res: Response) => {
     }
 }
 
-export { registerCtrl, loginCtrl, validateCtrl };
+const resendCtrl = async ({body}: Request, res: Response) => {
+    try {
+        const response = await resendValidation(body.username);
+        if (response == 'EMAIL_SENT_SUCCESSFULLY') {
+            res.status(200).send('Email sent');
+        } else if (response == 'NOT_FOUND_USER') {
+            res.status(404).send('Not found user');
+        } else {
+            res.status(500).send(response);
+        }
+    } catch (e) {
+        res.status(500).send(`Error resendEmail: ${e}`);
+    }
+}
+
+const forgotCtrl = async ({body}: Request, res: Response) => {
+    try {
+        const response = await forgotPassword(body.email);
+        if (response == 'EMAIL_SENT_SUCCESSFULLY') {
+            res.status(200).send('Email sent');
+        } else if (response == 'NOT_FOUND_USER') {
+            res.status(404).send('Not found user');
+        } else {
+            res.status(500).send(response);
+        }
+    } catch (e) {
+        res.status(500).send(`Error resendEmail: ${e}`);
+    }
+}
+
+const restoreCtrl = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const pass = req.body.password;
+        const response = await restorePassword(id, pass);
+        if (response == 'PASSWORD_UPDATED_SUCCESSFULLY') {
+            res.status(200).send('Password updated');
+        } else if (response == 'USER_NOT_FOUND') {
+            res.status(404).send('Not found user');
+        } else {
+            res.status(500).send(response);
+        }
+    } catch (e) {
+        res.status(500).send(`Error restorePass: ${e}`);
+    }
+}
+
+export { registerCtrl, loginCtrl, validateCtrl, resendCtrl, forgotCtrl, restoreCtrl };
