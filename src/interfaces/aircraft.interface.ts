@@ -3,6 +3,7 @@ export interface Aircraft {
     metro: String;
     profileImage?: String;
     elevationImage?: String;
+    visible: Boolean,
     profile: {
         nMotors: {
             heightFirstSegment: number;

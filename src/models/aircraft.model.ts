@@ -17,6 +17,10 @@ const AircraftSchema = new Schema<Aircraft> (
         elevationImage: {
             type: String,
         },
+        visible: {
+            type: Boolean,
+            default: true,
+        },
         profile: {
             nMotors: {
                 heightFirstSegment: {

@@ -13,6 +13,7 @@ const obtainAircraft = async (id: string) => {
 }
 
 const addAircraft = async (aircraft: Aircraft) => {
+    aircraft.visible = true;
     const response = await AircraftModel.create(aircraft);
     return response;
 }

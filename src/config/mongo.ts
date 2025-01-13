@@ -14,7 +14,7 @@ export async function dbConnect(): Promise<void> {
         console.log("Connected to MongoDB");
     } catch (e) {
         console.error('Connection Error:', e);
-        setTimeout(dbConnect, 5000);
+        //setTimeout(dbConnect, 5000);
     }
 }
 
