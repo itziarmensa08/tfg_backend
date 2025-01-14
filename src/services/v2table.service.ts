@@ -137,7 +137,7 @@ const obtainClosestRows = async (pressure: number, grossWeight: number, temperat
     if (exactTemperatureData.length > 0) {
         closestTemperatureData = exactTemperatureData;
     } else {
-        const predefinedTemperatures = [-30, -10, 0, 10, 20, 40, 55];
+        const predefinedTemperatures = v2table.temperatures;
         const [closest1, closest2] = findClosestNumbers(predefinedTemperatures, temperature);
         closestTemperatureData = closestWeightRows.reduce((accumulator: V2tableData[], row: V2tableRow) => {
             const closestTemperatures = row.data.filter((data: V2tableData) => data.temperature === closest1 || data.temperature === closest2);

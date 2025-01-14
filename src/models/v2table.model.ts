@@ -12,6 +12,10 @@ const V2tableSchema = new Schema<V2table> (
             type: String,
             required: true,
         },
+        temperatures: [{
+            type: Number,
+            required: true
+        }],
         rows: [{
             pressure: {
                 type: Number,

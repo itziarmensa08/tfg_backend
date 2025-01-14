@@ -4,6 +4,7 @@ export interface V2table {
     aircraft: ObjectId[];
     title: String;
     rows: V2tableRow[];
+    temperatures: number[];
 }
 
 export interface V2tableRow{
