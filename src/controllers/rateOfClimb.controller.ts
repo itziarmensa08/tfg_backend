@@ -95,7 +95,7 @@ const calculateRateOfClimb = async (req: Request, res: Response) => {
         const response = await calculateRate(id, temperature, altitud, weight);
         res.status(200).send(response);
     } catch (e) {
-        res.status(500).json(`Error postWeightLine: ${e}`)
+        res.status(500).json(`Error calculateRate: ${e}`)
     }
 }
 
