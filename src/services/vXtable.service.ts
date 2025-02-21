@@ -1,5 +1,5 @@
 import { VXtable, VXtableRow, VXtableWeights } from "../interfaces/vXtable.interface";
-import VXtableModel from "../models/vxtable.model";
+import VXtableModel from "../models/vXtable.model";
 
 
 const obtainVXtables = async () => {
