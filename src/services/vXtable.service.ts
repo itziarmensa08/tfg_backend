@@ -107,13 +107,13 @@ const obtainClosestRowsVX = async (pressure: number, grossWeight: number, idAirc
         };
     } else if (cells.length === 2) {
         // Caso en el que solo tenemos una fila de peso y dos valores de presión
-        const weight1 = cells[0].weight;
-        const weight2 = cells[1].weight;
+        const pressure1 = closestPressureRows[0].pressure;
+        const pressure2 = closestPressureRows[1].pressure;
 
         const velocityP1 = cells[0].velocityValue;
         const velocityP2 = cells[1].velocityValue;
 
-        const finalVelocity = interpolate(pressure, weight1, weight2, velocityP1, velocityP2);
+        const finalVelocity = interpolate(pressure, pressure1, pressure2, velocityP1, velocityP2);
 
         return {
             cells: cells,
