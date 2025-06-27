@@ -1,0 +1,10 @@
+2025-06-27T08:11:24.864Z [info]: Login attempt failed: user not found (itziar)
+2025-06-27T08:11:58.065Z [info]: User logged in: itziarmensa
+2025-06-27T08:12:04.554Z [info]: User logged in: itziarmensa
+2025-06-27T08:12:04.736Z [info]: Airports with procedures retrieved
+2025-06-27T08:17:51.315Z [info]: User retrieved with id: 65fc95dc446d0c091f19bf6e
+2025-06-27T08:17:57.971Z [error]: Login attempt failed: user not found (itziarmens)
+2025-06-27T08:19:23.315Z [error]: Login attempt failed: user not found (itziarmens)
+2025-06-27T08:19:55.865Z [error]: Login attempt failed: user not found (itziarmens)
+2025-06-27T08:21:52.719Z [error]: Login attempt failed: user not found (itziarmens)
+2025-06-27T08:26:23.016Z [error]: Login attempt failed: user not found (itziarmens)

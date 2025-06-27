@@ -4,52 +4,62 @@ import fs from 'fs';
 import path from 'path';
 import UserModel from "../models/user.model";
 import { transporter } from "../config/mail";
+import logger from "../config/logger";
 
 const getUser = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const response = await obtainUser(id);
+        logger.info(`User retrieved with id: ${id}`);
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).json(`Error getUser: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in getUser with id ${req.params.id}: ${e.stack || e}`);
+        res.status(500).json(`Error getUser: ${e}`);
     }
-}
+};
 
-const getUsers = async (req: Request, res: Response) => {
+const getUsers = async (_req: Request, res: Response) => {
     try {
         const response = await obtainUsers();
+        logger.info("All users retrieved");
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).send(`Error getUsers: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in getUsers: ${e.stack || e}`);
+        res.status(500).send(`Error getUsers: ${e}`);
     }
-}
+};
 
 const updateUser = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const user = req.body;
         const response = await putUser(id, user);
+        logger.info(`User updated with id ${id}: ${JSON.stringify(user)}`);
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).json(`Error updateUser: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in updateUser with id ${req.params.id}: ${e.stack || e}`);
+        res.status(500).json(`Error updateUser: ${e}`);
     }
-}
+};
 
 const deleteUser = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const response = await removeUser(id);
+        logger.info(`User deleted with id: ${id}`);
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).json(`Error deleteUser: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in deleteUser with id ${req.params.id}: ${e.stack || e}`);
+        res.status(500).json(`Error deleteUser: ${e}`);
     }
-}
+};
 
 const addTaskUser = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const task = req.body;
         const response = await addTask(id, task);
+        logger.info(`Task added to user ${id}: ${JSON.stringify(task)}`);
         res.status(200).send(response);
         const user = await UserModel.findOne({_id: id});
         if (user != null) {
@@ -75,19 +85,20 @@ const addTaskUser = async (req: Request, res: Response) => {
                 try {
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            console.log(error);
+                            logger.error(`Error sending task email to ${user.email}: ${error}`);
                         } else {
-                            console.log(`Email sent: ${info.response}`);
+                            logger.info(`Task email sent to ${user.email}: ${info.response}`);
                         }
                     });
-                } catch (e) {
-                    console.log(e);
+                } catch (e: any) {
+                    logger.error(`Exception sending task email: ${e.stack || e}`);
                 }
             } else {
-                console.error(`Error: El archivo ${filePath} no existe.`);
+                logger.error(`Task email template not found: ${filePath}`);
             }
         }
-    } catch (e) {
+    } catch (e: any) {
+        logger.error(`Error in addTaskUser with id ${req.params.id}: ${e.stack || e}`);
         res.status(500).json(`Error adding task: ${e}`)
     }
 }
@@ -97,19 +108,23 @@ const completeTaskUser = async (req: Request, res: Response) => {
         const idUser = req.params.idUser;
         const idTask = req.params.idTask;
         const response = await completeTask(idUser, idTask);
+        logger.info(`Task ${idTask} completed by user ${idUser}`);
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).json(`Error completing task: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in completeTaskUser with user ${req.params.idUser} and task ${req.params.idTask}: ${e.stack || e}`);
+        res.status(500).json(`Error completing task: ${e}`);
     }
-}
+};
 
-const sendRemindTask = async (req: Request, res: Response) => {
+const sendRemindTask = async (_req: Request, res: Response) => {
     try {
         const response = await remindTask();
+        logger.info("Reminder emails sent for pending tasks");
         res.status(200).send(response);
-    } catch (e) {
-        res.status(500).json(`Error sendReminders: ${e}`)
+    } catch (e: any) {
+        logger.error(`Error in sendRemindTask: ${e.stack || e}`);
+        res.status(500).json(`Error sendReminders: ${e}`);
     }
-}
+};
 
 export {getUser, getUsers, updateUser, deleteUser, addTaskUser, completeTaskUser, sendRemindTask};
